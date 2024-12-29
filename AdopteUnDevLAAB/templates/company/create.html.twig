@@ -1,0 +1,30 @@
+<h1>Créer un nouveau profil entreprise</h1>
+
+<form action="{{ path('company_save') }}" method="POST">
+    <div>
+        <label for="name">Nom de l'entreprise :</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+
+    <div>
+        <label for="location">Localisation :</label>
+        <input type="text" id="location" name="location" required>
+    </div>
+
+    <div>
+        <label for="description">Description :</label>
+        <textarea id="description" name="description" required></textarea>
+    </div>
+
+    <div>
+        <label for="technologies">Technologies recherchées :</label>
+        <input type="text" id="technologies" name="technologies" required>
+    </div>
+
+    <div>
+        <label for="salaryRange">Plage salariale :</label>
+        <input type="number" step="0.01" id="salaryRange" name="salaryRange" required>
+    </div>
+
+    <button type="submit">Créer le profil</button>
+</form>

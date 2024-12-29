@@ -1,0 +1,39 @@
+<h1>Liste des développeurs</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prénoms</th>
+            <th>Salaire minimum</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for dev in devs %}
+            <tr>
+                <td>{{ dev.nom }}</td>
+                <td>{{ dev.prenoms }}</td>
+                <td>{{ dev.salaireMin }} €</td>
+                <td>
+                    <a href="{{ path('dev_show', { id: dev.id }) }}">Voir</a>
+                    <a href="{{ path('dev_edit', { id: dev.id }) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Aucun développeur trouvé.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ path('dev_new') }}">Créer un nouveau profil</a>
+
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}

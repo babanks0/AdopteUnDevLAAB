@@ -1,0 +1,13 @@
+<h1>Profil de l'entreprise : {{ company.name }}</h1>
+
+<p><strong>Localisation :</strong> {{ company.location }}</p>
+<p><strong>Description :</strong> {{ company.description }}</p>
+<p><strong>Technologies recherchées :</strong> {{ company.technologies }}</p>
+<p><strong>Plage salariale :</strong> {{ company.salaryRange }} €</p>
+
+<a href="{{ path('company_edit', { id: company.id }) }}">Modifier</a>
+
+<form method="post" action="{{ path('company_delete', { id: company.id }) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ company.id) }}">
+    <button type="submit" class="btn btn-danger">Supprimer</button>
+</form>

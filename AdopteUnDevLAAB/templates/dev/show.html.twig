@@ -1,0 +1,19 @@
+<h1>Profil de {{ dev.nom }} {{ dev.prenoms }}</h1>
+
+<p><strong>Biographie :</strong> {{ dev.bibliographie }}</p>
+<p><strong>Salaire minimum :</strong> {{ dev.salaireMin }} €</p>
+<p><strong>Visibilité :</strong> {{ dev.visibilite ? 'Oui' : 'Non' }}</p>
+
+<a href="{{ path('dev_edit', { id: dev.id }) }}">Modifier</a>
+
+<form method="post" action="{{ path('dev_delete', { id: dev.id }) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ dev.id) }}">
+    <button type="submit" class="btn btn-danger">Supprimer</button>
+</form>
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}

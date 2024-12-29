@@ -1,0 +1,39 @@
+<h1>Modifier le profil de {{ dev.nom }}</h1>
+
+<form action="{{ path('dev_save') }}" method="POST">
+    <input type="hidden" name="id" value="{{ dev.id }}">
+
+    <div>
+        <label for="nom">Nom :</label>
+        <input type="text" id="nom" name="nom" value="{{ dev.nom }}" required>
+    </div>
+
+    <div>
+        <label for="prenoms">Prénoms :</label>
+        <input type="text" id="prenoms" name="prenoms" value="{{ dev.prenoms }}" required>
+    </div>
+
+    <div>
+        <label for="bibliographie">Biographie :</label>
+        <textarea id="bibliographie" name="bibliographie" required>{{ dev.bibliographie }}</textarea>
+    </div>
+
+    <div>
+        <label for="salaireMin">Salaire minimum :</label>
+        <input type="number" step="0.01" id="salaireMin" name="salaireMin" value="{{ dev.salaireMin }}" required>
+    </div>
+
+    <div>
+        <label for="visibilite">Visibilité :</label>
+        <input type="checkbox" id="visibilite" name="visibilite" {% if dev.visibilite %}checked{% endif %}>
+    </div>
+
+    <button type="submit">Mettre à jour</button>
+</form>
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}

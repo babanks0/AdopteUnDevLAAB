@@ -3,3 +3,44 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+dev_new:
+    path: /dev/new
+    controller: App\Controller\DevController::new
+
+dev_save:
+    path: /dev/save
+    controller: App\Controller\DevController::save
+
+dev_show:
+    path: /dev/{id}
+    controller: App\Controller\DevController::show
+
+dev_edit:
+    path: /dev/{id}/edit
+    controller: App\Controller\DevController::edit
+
+dev_delete:
+    path: /dev/{id}/delete
+    controller: App\Controller\DevController::delete
+
+
+company_new:
+    path: /company/new
+    controller: App\Controller\CompanyController::new
+
+company_save:
+    path: /company/save
+    controller: App\Controller\CompanyController::save
+
+company_show:
+    path: /company/{id}
+    controller: App\Controller\CompanyController::show
+
+company_edit:
+    path: /company/{id}/edit
+    controller: App\Controller\CompanyController::edit
+
+company_delete:
+    path: /company/{id}/delete
+    controller: App\Controller\CompanyController::delete
