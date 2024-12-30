@@ -22,13 +22,13 @@ class Dev
     #[ORM\Column(length: 255)]
     private ?string $prenoms = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT,nullable: true)]
     private ?string $bibliographie = null;
 
     #[ORM\Column]
     private ?bool $visibilite = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255,nullable: true)]
     private ?string $salaireMin = null;
 
     public function getId(): ?int
