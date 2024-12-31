@@ -87,8 +87,7 @@ class RegistrationController extends AbstractController
         $dev->setPrenoms($firstName);
         $dev->setVisibilite(false);
         $user->setDev($dev);
-        $user->setRoles(["ROLES_DEV"]);
-            
+        $user->setRoles(["ROLE_DEV"]);
         $this->entityManager->persist($dev);
         $this->entityManager->persist($user);
 
@@ -99,7 +98,7 @@ class RegistrationController extends AbstractController
         $company = new company();
 
         $company->setRaisonSociale($request->request->get('name'));
-        $user->setRoles(["ROLES_COMPANY"]);
+        $user->setRoles(["ROLE_COMPANY"]);
         $user->setCompany($company);
 
         $this->entityManager->persist($company);
