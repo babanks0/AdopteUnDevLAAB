@@ -308,132 +308,86 @@
     </section>
     <!-- end home -->
 
-    <!-- popular category start -->
+
     <section class="section">
+
         <div class="container">
+            
             <div class="row justify-content-center">
                 <div class="col-12">
                     <div class="section-title text-center mb-4 pb-2">
-                        <h4 class="title title-line pb-5">Popular Category</h4>
-                        <p class="text-muted para-desc mx-auto mb-1">Post a job to tell us about your project. We'll quickly match you with the right freelancers.</p>
+                        <h4 class="title title-line pb-5">Les postes les plus visités</h4>
+                        <p class="text-muted para-desc mx-auto mb-1">La liste des postes les mieux visités par les devéloppeurs</p>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-3 col-md-6 mt-4 pt-2">
-                    <a href="javascript:void(0)">
-                        <div class="popu-category-box bg-light rounded text-center p-4">
-                            <div class="popu-category-icon mb-3">
-                                <i class="mdi mdi-account d-inline-block rounded-pill h3 text-primary"></i>
+                <div class="col-lg-12">
+                    <div class="row">
+                        {% for poste in postes %}
+                            <div class="col-lg-4 col-md-6 mt-4 pt-2">
+                                <div class="list-grid-item rounded">
+                                    <div class="grid-item-content p-3">
+                                        <ul class="list-inline mb-0">
+                                            <li class="list-inline-item f-15"><span class="badge badge-success">Part Time</span></li>
+                                            <li class="list-inline-item float-right">
+                                                <div class="">
+                                                    <a class="favoris" data-poste-id="{{ poste.poste.id }}" data-user-id="{{ poste.poste.company.id }}"  class="text-danger">
+                                                        {% if poste.poste.favoris %}
+                                                            <i class="mdi mdi-heart" style="color:#2f55d4; font-size:20px"></i>
+                                                        {% else %}
+                                                            <i class="mdi mdi-heart-outline" style="color:#2f55d4; font-size:20px"></i>
+                                                        {% endif %}
+                                                        
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <div class="grid-list-img mt-3">
+                                            <img src="{{asset('assets/images/featured-job/img-1.png')}}" alt="" class="img-fluid d-block">
+                                        </div>
+                                        <div class="grid-list-desc mt-3">
+                                            <h5 class="mb-1"><a href="#" class="text-dark">{{ poste.poste.titre }}</a></h5>
+                                            <p class="text-muted f-14 mb-1">{{ poste.poste.localisation }}</p>
+                                            <p class="text-muted mb-1">{{ poste.poste.salaire }} €/mois</p>
+                                            <p class="text-muted mb-1">{{ poste.poste.niveauExperience}} Years Exp.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="apply-button p-3 border-top">
+                                        <a href="#" class="btn btn-primary btn-sm">Postuler</a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="popu-category-content">
-                                <h5 class="mb-2 text-dark title">Developer</h5>
-                                <p class="text-success mb-0 rounded">780 Jobs</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-md-6 mt-4 pt-2">
-                    <a href="javascript:void(0)">
-                        <div class="popu-category-box bg-light rounded text-center p-4">
-                            <div class="popu-category-icon mb-3">
-                                <i class="mdi mdi-desktop-classic d-inline-block rounded-pill h3 text-primary"></i>
-                            </div>
-                            <div class="popu-category-content">
-                                <h5 class="mb-2 text-dark title">Technology</h5>
-                                <p class="text-success mb-0 rounded">1270 Jobs</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-md-6 mt-4 pt-2">
-                    <a href="javascript:void(0)">
-                        <div class="popu-category-box bg-light rounded text-center p-4">
-                            <div class="popu-category-icon mb-3">
-                                <i class="mdi mdi-bank d-inline-block rounded-pill h3 text-primary"></i>
-                            </div>
-                            <div class="popu-category-content">
-                                <h5 class="mb-2 text-dark title">Government</h5>
-                                <p class="text-success mb-0 rounded">2024 Jobs</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-md-6 mt-4 pt-2">
-                    <a href="javascript:void(0)">
-                        <div class="popu-category-box bg-light rounded text-center p-4">
-                            <div class="popu-category-icon mb-3">
-                                <i class="mdi mdi-auto-fix d-inline-block rounded-pill h3 text-primary"></i>
-                            </div>
-                            <div class="popu-category-content">
-                                <h5 class="mb-2 text-dark title">Accounting / Finance</h5>
-                                <p class="text-success mb-0 rounded">786 Jobs</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-md-6 mt-4 pt-2">
-                    <a href="javascript:void(0)">
-                        <div class="popu-category-box bg-light rounded text-center p-4">
-                            <div class="popu-category-icon mb-3">
-                                <i class="mdi mdi-office-building d-inline-block rounded-pill h3 text-primary"></i>
-                            </div>
-                            <div class="popu-category-content">
-                                <h5 class="mb-2 text-dark title">Construction / Facilities</h5>
-                                <p class="text-success mb-0 rounded">2156 Jobs</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-md-6 mt-4 pt-2">
-                    <a href="javascript:void(0)">
-                        <div class="popu-category-box bg-light rounded text-center p-4">
-                            <div class="popu-category-icon mb-3">
-                                <i class="mdi mdi-telegram d-inline-block rounded-pill h3 text-primary"></i>
-                            </div>
-                            <div class="popu-category-content">
-                                <h5 class="mb-2 text-dark title">Tele-communications</h5>
-                                <p class="text-success mb-0 rounded">256 Jobs</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-md-6 mt-4 pt-2">
-                    <a href="javascript:void(0)">
-                        <div class="popu-category-box bg-light rounded text-center p-4">
-                            <div class="popu-category-icon mb-3">
-                                <i class="mdi mdi-television-classic d-inline-block rounded-pill h3 text-primary"></i>
-                            </div>
-                            <div class="popu-category-content">
-                                <h5 class="mb-2 text-dark title">Design & Multimedia</h5>
-                                <p class="text-success mb-0 rounded">585 Jobs</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-md-6 mt-4 pt-2">
-                    <a href="javascript:void(0)">
-                        <div class="popu-category-box bg-light rounded text-center p-4">
-                            <div class="popu-category-icon mb-3">
-                                <i class="mdi mdi-human d-inline-block rounded-pill h3 text-primary"></i>
-                            </div>
-                            <div class="popu-category-content">
-                                <h5 class="mb-2 text-dark title">Human Resource</h5>
-                                <p class="text-success mb-0 rounded">548 Jobs</p>
-                            </div>
-                        </div>
-                    </a>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
 
-            <div class="row justify-content-center">
-                <div class="col-12 text-center mt-4 pt-2">
-                    <a href="javascript:void(0)" class="btn btn-primary-outline">Browse All Categories <i class="mdi mdi-chevron-right"></i></a>
+            <div class="row">
+                <div class="col-lg-12 mt-4 pt-2">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination job-pagination mb-0 justify-content-center">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                                    <i class="mdi mdi-chevron-double-left f-15"></i>
+                                </a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">4</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">
+                                    <i class="mdi mdi-chevron-double-right f-15"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
     </section>
-    <!-- popular category end -->
 
     <!-- all jobs start -->
     <section class="section bg-light">
@@ -1621,119 +1575,36 @@
     </section>
     <!-- testimonial end -->
 
-    <!-- blog start -->
-    <section class="section bg-light">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12">
-                    <div class="section-title text-center mb-4 pb-2">
-                        <h4 class="title title-line pb-5">Career advice</h4>
-                        <p class="text-muted para-desc mx-auto mb-1">Post a job to tell us about your project. We'll quickly match you with the right freelancers.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 mt-4 pt-2">
-                    <div class="blog position-relative overflow-hidden shadow rounded">
-                        <div class="position-relative overflow-hidden">
-                            <img src="images/blog/img-1.jpg" class="img-fluid rounded-top" alt="">
-                            <div class="overlay rounded-top bg-dark"></div>
-                            <div class="likes">
-                                <ul class="list-unstyled mb-0">
-                                    <li class="list-inline-item mr-2"><a href="javascript:void(0)" class="text-white like"><i class="mdi mdi-heart-outline mr-1"></i>33</a></li>
-                                    <li class="list-inline-item"><a href="javascript:void(0)" class="text-white comments"><i class="mdi mdi-comment-outline mr-1"></i>08</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="content p-4">
-                            <h4><a href="javascript:void(0)" class="title text-dark">How apps is the IT world</a></h4>
-                            <p class="text-muted">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium, totam rem aperiam</p>
-                            <a href="#" class="text-dark readmore">Read more <i class="mdi mdi-chevron-right"></i></a>
-                        </div>
-                        <div class="author">
-                            <p class=" mb-0"><i class="mdi mdi-account text-light"></i> <a href="javascript:void(0)" class="text-light user">Dirio Walls</a></p>
-                            <p class="text-light mb-0 date"><i class="mdi mdi-calendar-check"></i> 25 Sep, 2019</p>
-                        </div>
-                    </div>
-                </div><!--end col-->
-                
-                <div class="col-lg-4 col-md-6 mt-4 pt-2">
-                    <div class="blog position-relative overflow-hidden shadow rounded">
-                        <div class="position-relative overflow-hidden">
-                            <img src="images/blog/img-2.jpg" class="img-fluid rounded-top" alt="">
-                            <div class="overlay rounded-top bg-dark"></div>
-                            <div class="likes">
-                                <ul class="list-unstyled mb-0">
-                                    <li class="list-inline-item mr-2"><a href="javascript:void(0)" class="text-white like"><i class="mdi mdi-heart-outline mr-1"></i>33</a></li>
-                                    <li class="list-inline-item"><a href="javascript:void(0)" class="text-white comments"><i class="mdi mdi-comment-outline mr-1"></i>08</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="content p-4">
-                            <h4><a href="javascript:void(0)" class="title text-dark">Vestibulum ante ipsum primis</a></h4>
-                            <p class="text-muted">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium, totam rem aperiam</p>
-                            <a href="#" class="text-dark readmore">Read more <i class="mdi mdi-chevron-right"></i></a>
-                        </div>
-                        <div class="author">
-                            <p class=" mb-0"><i class="mdi mdi-account text-light"></i> <a href="javascript:void(0)" class="text-light user">Dirio Walls</a></p>
-                            <p class="text-light mb-0 date"><i class="mdi mdi-calendar-check"></i> 25 Sep, 2019</p>
-                        </div>
-                    </div>
-                </div><!--end col-->
-                
-                <div class="col-lg-4 col-md-6 mt-4 pt-2">
-                    <div class="blog position-relative overflow-hidden shadow rounded">
-                        <div class="position-relative overflow-hidden">
-                            <img src="images/blog/img-3.jpg" class="img-fluid rounded-top" alt="">
-                            <div class="overlay rounded-top bg-dark"></div>
-                            <div class="likes">
-                                <ul class="list-unstyled mb-0">
-                                    <li class="list-inline-item mr-2"><a href="javascript:void(0)" class="text-white like"><i class="mdi mdi-heart-outline mr-1"></i>33</a></li>
-                                    <li class="list-inline-item"><a href="javascript:void(0)" class="text-white comments"><i class="mdi mdi-comment-outline mr-1"></i>08</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="content p-4">
-                            <h4><a href="javascript:void(0)" class="title text-dark">Maecenas tempus tellus eget</a></h4>
-                            <p class="text-muted">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium, totam rem aperiam</p>
-                            <a href="#" class="text-dark readmore">Read more <i class="mdi mdi-chevron-right"></i></a>
-                        </div>
-                        <div class="author">
-                            <p class=" mb-0"><i class="mdi mdi-account text-light"></i> <a href="javascript:void(0)" class="text-light user">Dirio Walls</a></p>
-                            <p class="text-light mb-0 date"><i class="mdi mdi-calendar-check"></i> 25 Sep, 2019</p>
-                        </div>
-                    </div>
-                </div><!--end col-->
-            </div>
-        </div>
-    </section>
-    <!-- blog end -->
-
-    <!-- subscribe start -->
-    <section class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-md-5">
-                    <div class="float-left position-relative notification-icon mr-2">
-                        <i class="mdi mdi-bell-outline text-primary"></i>
-                        <span class="badge badge-pill badge-danger">1</span>
-                    </div>
-                    <h5 class="mt-2 mb-0">Your Job Notification</h5>
-                </div>
-                <div class="col-lg-8 col-md-7 mt-4 mt-sm-0">
-                    <form>
-                        <div class="form-group mb-0">
-                            <div class="input-group mb-0">
-                                <input name="email" id="email" type="email" class="form-control" placeholder="Your email :" required="" aria-describedby="newssubscribebtn">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary submitBnt" type="submit" id="newssubscribebtn">Subscribe</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- subscribe end -->
+    
 {% endblock %}
+{% block javascripts %}
+<script>
+    $(document).ready(function () {
+        $('.favoris').click(function () {
+            // Récupérer l'élément sur lequel on a cliqué
+            let clickedElement = $(this);
+
+            // Récupérer des valeurs spécifiques à cet élément
+            let posteId = clickedElement.data('poste-id');
+            let userId = clickedElement.data('user-id');
+            console.log(userId);
+            console.log(posteId);
+            $.ajax({
+                url: '{{ path('add_favoris_poste') }}',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    'poste_id': posteId,
+                    'user_id': userId
+                },
+                success: function (response) {
+                    clickedElement.html("<i class='mdi mdi-heart' style='color:#2f55d4; font-size:20px'></i>");
+                }
+            });
+        });
+
+    });
+    
+</script>
+{% endblock %}
+
