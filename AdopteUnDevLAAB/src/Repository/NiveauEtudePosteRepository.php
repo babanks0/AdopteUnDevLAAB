@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\NiveauExperienceDev;
+use App\Entity\NiveauEtudePoste;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<NiveauExperienceDev>
+ * @extends ServiceEntityRepository<NiveauEtudePoste>
  */
-class NiveauExperienceDevRepository extends ServiceEntityRepository
+class NiveauEtudePosteRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, NiveauExperienceDev::class);
+        parent::__construct($registry, NiveauEtudePoste::class);
     }
 
     //    /**
-    //     * @return NiveauExperienceDev[] Returns an array of NiveauExperienceDev objects
+    //     * @return NiveauEtudePoste[] Returns an array of NiveauEtudePoste objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class NiveauExperienceDevRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?NiveauExperienceDev
+    //    public function findOneBySomeField($value): ?NiveauEtudePoste
     //    {
     //        return $this->createQueryBuilder('n')
     //            ->andWhere('n.exampleField = :val')

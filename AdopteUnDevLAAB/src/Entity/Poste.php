@@ -28,12 +28,16 @@ class Poste
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column]
-    private ?bool $status = null;
-
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Company $company = null;
+
+    #[ORM\Column]
+    private ?int $niveauExperience = null;
+
+    #[ORM\Column]
+    private ?bool $favoris = null;
+
 
     public function getId(): ?int
     {
@@ -88,18 +92,6 @@ class Poste
         return $this;
     }
 
-    public function isStatus(): ?bool
-    {
-        return $this->status;
-    }
-
-    public function setStatus(bool $status): static
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
     public function getCompany(): ?Company
     {
         return $this->company;
@@ -108,6 +100,30 @@ class Poste
     public function setCompany(?Company $company): static
     {
         $this->company = $company;
+
+        return $this;
+    }
+
+    public function getNiveauExperience(): ?int
+    {
+        return $this->niveauExperience;
+    }
+
+    public function setNiveauExperience(int $niveauExperience): static
+    {
+        $this->niveauExperience = $niveauExperience;
+
+        return $this;
+    }
+
+    public function isFavoris(): ?bool
+    {
+        return $this->favoris;
+    }
+
+    public function setFavoris(bool $favoris): static
+    {
+        $this->favoris = $favoris;
 
         return $this;
     }

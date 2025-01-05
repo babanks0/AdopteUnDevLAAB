@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\FavorisRepository;
+use App\Repository\NiveauEtudePosteRepository;
 use App\Utils\TraitClasses\EntityTimestampableTrait;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: FavorisRepository::class)]
-class Favoris
+#[ORM\Entity(repositoryClass: NiveauEtudePosteRepository::class)]
+class NiveauEtudePoste
 {
     use EntityTimestampableTrait;
     #[ORM\Id]
@@ -16,11 +16,12 @@ class Favoris
     private ?int $id = null;
 
     #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Poste $poste = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    private ?NiveauEtude $niveauEtude = null;
 
     public function getId(): ?int
     {
@@ -39,14 +40,14 @@ class Favoris
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getNiveauEtude(): ?NiveauEtude
     {
-        return $this->user;
+        return $this->niveauEtude;
     }
 
-    public function setUser(?User $user): static
+    public function setNiveauEtude(?NiveauEtude $niveauEtude): static
     {
-        $this->user = $user;
+        $this->niveauEtude = $niveauEtude;
 
         return $this;
     }

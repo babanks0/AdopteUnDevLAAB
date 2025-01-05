@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\NiveauExperienceRepository;
+use App\Repository\NiveauEtudeRepository;
 use App\Utils\TraitClasses\EntityTimestampableTrait;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: NiveauExperienceRepository::class)]
-class NiveauExperience
+#[ORM\Entity(repositoryClass: NiveauEtudeRepository::class)]
+class NiveauEtude
 {
     use EntityTimestampableTrait;
     #[ORM\Id]
