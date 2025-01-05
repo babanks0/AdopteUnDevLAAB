@@ -60,18 +60,18 @@
 			</a>
 		</div>
 		<div class="buy-button">
-			<a href="{{path('app_login')}}" class="btn btn-primary">
+			
 
 				{% if app.user %}
-					<i class="mdi mdi-account mr-2"></i>
-					Profil
+				<a href="{{path('app_login')}}" class="btn btn-primary"><i class="mdi mdi-account mr-2"></i>
+					Profil</a>
 				{% else %}
-					<i class="mdi mdi-login"></i>
-					Connexion
+				<a href="{{path('app_login')}}" class="btn btn-primary"><i class="mdi mdi-login"></i>
+					Connexion</a>
 				{% endif %}
 
 
-			</a>
+			
 		</div>
 		<!--end login button-->
 		<!-- End Logo container-->

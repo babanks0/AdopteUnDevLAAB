@@ -191,14 +191,14 @@ var KTSignupGeneral = function() {
                                     icon: "success",
                                     buttonsStyling: false,
                                     allowOutsideClick: false,
-                                    confirmButtonText: _Form_Ok_Swal_Button_Text_Notification,
+                                    confirmButtonText: _Connexion,
                                     customClass: {
                                         confirmButton: "btn btn-primary"
                                     }
                                 }).then(function (result) {
                                     if (result.isConfirmed) {
                                         form.reset(); // Réinitialiser le formulaire
-                                        // window.location.href = response.url;
+                                        window.location.href = response.url;
                                     }
                                 });
                             } else if (response.status === 'exist') {

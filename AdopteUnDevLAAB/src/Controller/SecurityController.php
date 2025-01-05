@@ -23,7 +23,6 @@ class SecurityController extends AbstractController
 
         if ($error) {
             $this->addFlash('fail', 'Echec de connexion. Veuillez vérifier vos informations de connexion et réessayer.');
-            dd($error);
         }
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);

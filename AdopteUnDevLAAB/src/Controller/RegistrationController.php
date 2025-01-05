@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Dev;
-use App\Entity\Company;
 use App\Entity\User;
+use App\Entity\Company;
 use App\Security\EmailVerifier;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
@@ -70,7 +71,7 @@ class RegistrationController extends AbstractController
 
          //   $security->login($user, AppCustomAuthenticator::class, 'main');
 
-            return new JsonResponse(["status"=>"success","msg"=>"Inscription effecutée avec succès"]);
+            return new JsonResponse(["status"=>"success","msg"=>"Inscription effecutée avec succès","url"=>$this->generateUrl('app_login',[],0)]);
 
         }
 

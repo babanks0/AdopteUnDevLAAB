@@ -45,7 +45,7 @@
         <!-- Loader -->
         
         <div class="back-to-home rounded d-none d-sm-block">
-            <a href="" class="text-white rounded d-inline-block text-center"><i class="mdi mdi-home"></i></a>
+            <a href="{{path('app_dashboard')}}" class="text-white rounded d-inline-block text-center"><i class="mdi mdi-home"></i></a>
         </div>
 
         <!-- Hero Start -->
@@ -103,6 +103,7 @@
         const _Phone_Not_Valid          =   `{{ "Le numéro de téléphone n'est pas valide."|trans|raw}}`;
 		const _Form_Error_Swal_Notification          = `{{ "Désolé, il semble que un ou plusieurs champs obligatoires sont incorrects, veuillez bien renseigner."|trans }}`;
 		const _Form_Ok_Swal_Button_Text_Notification = `{{ "Ok, j'ai compris."|trans|raw }}`;
+		const _Connexion = `{{ "Se connecter"|trans|raw }}`;
         
         </script>
         {% block javascripts %} {% endblock %}
