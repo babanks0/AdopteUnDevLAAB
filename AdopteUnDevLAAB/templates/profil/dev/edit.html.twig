@@ -1,4 +1,57 @@
 {% extends "base.html.twig" %}
+{% block stylesheets %}
+	<style>
+		/* .bg-overlay{
+			background : url('{{ asset('assets/images/user.jpg') }}') ;
+		} */
+
+		#suggestions {
+            max-height: 200px;
+            overflow-y: auto;
+            position: absolute;
+            background: white;
+            z-index: 1000;
+            width: 100%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .suggestion {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .suggestion:hover {
+            background: #f8f9fa;
+        }
+	</style>
+	<!-- Bootstrap CSS -->
+	<link	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"	rel="stylesheet">
+		<!-- Select2 CSS -->
+		<link	href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"	rel="stylesheet" />
+		<style>
+        /* Ajustements pour Select2 */
+        .select2-container .select2-selection--multiple {
+            height: auto !important;
+            border: 1px solid #ced4da !important;
+            border-radius: 0.375rem !important; /* Coins arrondis */
+            padding: 0.375rem !important; /* Espacement interne */
+        }
+        .select2-container .select2-selection--single {
+            height: calc(2.25rem + 2px) !important;
+            border: 1px solid #ced4da !important;
+            border-radius: 0.375rem !important;
+            padding: 0.375rem 0.75rem !important;
+        }
+        .select2-container .select2-selection__rendered {
+            line-height: 1.5 !important;
+        }
+        .select2-container .select2-selection__arrow {
+            height: calc(2.25rem + 2px) !important;
+        }
+		.technologies .text-muted {
+			font-size: 14px;
+    		font-weight: 700;
+		}
+    </style>
+{% endblock %}
 {% block content %}
 <!-- Start home -->
 <section class="bg-half page-next-level"> 
@@ -32,334 +85,117 @@
 
             <div class="col-12 mt-3">
                 <div class="custom-form p-4 border rounded">
-                    <img src="{{asset('assets/images/employers/img-1.jpg')}}" class="img-fluid avatar avatar-medium d-block mx-auto rounded-pill" alt="">
-                    <form>
-                        <div class="row mt-4">
-                            <div class="col-md-4">
-                                <div class="form-group app-label">
-                                    <label class="text-muted">First Name<span class="text-danger">*</span> :</label>
-                                    <input id="first-name" type="text" name="name" class="form-control resume" placeholder="First Name :">
-                                </div>
-                            </div>
+                    {# <img src="{{asset('assets/images/employers/img-1.jpg')}}" class="img-fluid avatar avatar-medium d-block mx-auto rounded-pill" alt=""> #}
+                    <img src="{{ asset(user.avatar is not null ? 'uploads/avatars/' ~ user.avatar : 'assets/images/employers/img-1.jpg') }}" class="img-fluid avatar avatar-medium d-block mx-auto rounded-pill" alt="">
 
-                            <div class="col-md-4">
-                                <div class="form-group app-label">
-                                    <label class="text-muted">Middle Name<span class="text-danger">*</span> :</label>
-                                    <input id="middle-name" type="text" class="form-control resume" placeholder="Middle Name :">
-                                </div>
-                            </div>
+                    {{ form_start(form, {'attr': {'class': 'row mt-4'}}) }}
 
-                            <div class="col-md-4">
-                                <div class="form-group app-label">
-                                    <label class="text-muted">Surname<span class="text-danger">*</span> :</label>
-                                    <input id="surname-name" type="text" class="form-control resume" placeholder="Surname :">
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group app-label">
-                                    <label class="text-muted">Date Of Birth<span class="text-danger">*</span> :</label>
-                                    <input id="date-of-birth" type="text" class="form-control resume" placeholder="13-02-1999">
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group app-label">
-                                    <label class="text-muted">Sex<span class="text-danger">*</span> :</label>
-                                    <div class="form-button">
-                                        <select class="nice-select rounded">
-                                            <option data-display="sex">Sex</option>
-                                            <option value="1">Male</option>
-                                            <option value="2">Female</option>
-                                            <option value="3">Other</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group app-label">
-                                    <label class="text-muted">Marital Status</label>
-                                    <div class="form-button">
-                                        <select class="nice-select rounded">
-                                            <option data-display="Status">Status</option>
-                                            <option value="1">Unmarried</option>
-                                            <option value="2">Married</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="col-md-6">
+                        <div class="form-group app-label">
+                            {{ form_label(form.nom, 'Nom', {'label_attr': {'class': 'text-muted'}}) }}
+                            {{ form_widget(form.nom, {'attr': {'class': 'form-control resume', 'placeholder': 'Nom'}}) }}
+                            {{ form_errors(form.nom) }}
                         </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <div class="row mt-5">
-            <div class="col-12">
-                <h5 class="text-dark">Contact Information :</h5>
-            </div>
-
-            <div class="col-12 mt-3">
-                <div class="custom-form p-4 border rounded">
-                    <form>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group app-label">
-                                    <label class="text-muted">City</label>
-                                    <div class="form-button">
-                                        <select class="nice-select rounded">
-                                            <option data-display="City">City</option>
-                                            <option value="1">Abilene</option>
-                                            <option value="2">Babbitt</option>
-                                            <option value="3">Cape Coral</option>
-                                            <option value="4">Dallas</option>
-                                            <option value="5">Eloy</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group app-label">
-                                    <label class="text-muted">State</label>
-                                    <div class="form-button">
-                                        <select class="nice-select rounded">
-                                            <option data-display="State">State</option>
-                                            <option value="1">Alabama</option>
-                                            <option value="3">Hawaii</option>
-                                            <option value="4">Maine</option>
-                                            <option value="5">Oregon</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group app-label">
-                                    <label class="text-muted">Country</label>
-                                    <div class="form-button">
-                                        <select class="nice-select rounded">
-                                            <option data-display="Country">Country</option>
-                                            <option value="1">Alabama</option>
-                                            <option value="2">Delaware</option>
-                                            <option value="3">Iowa</option>
-                                            <option value="4">Missouri</option>
-                                            <option value="5">New York</option>
-                                            <option value="6">Utah</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group app-label">
-                                    <label class="text-muted">Phone</label>
-                                    <input id="phone" type="number" class="form-control resume" placeholder="Phone No. :">
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group app-label">
-                                    <label class="text-muted">E-mail</label>
-                                    <input id="e-mail" type="email" name="email" class="form-control resume" placeholder="Email ID :">
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group app-label">
-                                    <label class="text-muted">Website</label>
-                                    <input id="website" type="url" name="url" class="form-control resume" placeholder="www.example.com">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12">
-                                <div class="form-group app-label">
-                                    <label>Address :</label>
-                                    <textarea id="address" rows="4" class="form-control resume" placeholder=""></textarea>
-                                </div>
-                            </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group app-label">
+                            {{ form_label(form.prenoms, 'Prénoms', {'label_attr': {'class': 'text-muted'}}) }}
+                            {{ form_widget(form.prenoms, {'attr': {'class': 'form-control resume', 'placeholder': 'Prénoms'}}) }}
+                            {{ form_errors(form.prenoms) }}
                         </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-12">
-                <h5 class="text-dark mt-5">Education Details :</h5>
-            </div>
-
-            <div class="col-12 mt-3">
-                <div class="custom-form p-4 border rounded">
-                    <form>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group app-label">
-                                    <label class="text-muted">Graduation</label>
-                                    <input id="graduation" type="text" class="form-control resume" placeholder="">
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group app-label">
-                                    <label class="text-muted">University/College</label>
-                                    <input id="university/college" type="text" class="form-control resume" placeholder="">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="form-group app-label">
-                                    <label class="text-muted">Degree/Certification</label>
-                                    <input id="degree/certification" type="text" class="form-control resume" placeholder="">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group app-label">
-                                            <label class="text-muted">Level</label>
-                                            <div class="form-button">
-                                                <select class="nice-select rounded">
-                                                    <option data-display="Select">Select</option>
-                                                    <option value="1">Level-1</option>
-                                                    <option value="2">Level-2</option>
-                                                    <option value="3">Level-3</option>
-                                                    <option value="4">Level-4</option>
-                                                </select>
-                                            </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group app-label">
+                            {{ form_label(form.localisation, 'Localisation', {'label_attr': {'class': 'text-muted'}}) }}
+                            {{ form_widget(form.localisation, {'attr': {'class': 'form-control', 'id': 'address-input', 'autocomplete': 'off'}}) }}
+                            <div id="suggestions" class="list-group"></div>
+                            {{ form_errors(form.localisation) }}
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group app-label">
+                            {{ form_label(form.salaireMin, 'Salaire minimum', {'label_attr': {'class': 'text-muted'}}) }}
+                            {{ form_widget(form.salaireMin, {'attr': {'class': 'form-control resume', 'placeholder': '$8000'}}) }}
+                            {{ form_errors(form.salaireMin) }}
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 technologies">
+                        <div class="app-label">
+                            {{ form_label(form.tech, 'Langages de programmation', {'label_attr': {'class': 'text-muted'}}) }}
+                            {{ form_widget(form.tech, {'attr': {'class': 'js-example-basic-multiple form-control', 'multiple': 'multiple', 'style': 'width: 100%; height: auto;'}}) }}
+                            {{ form_errors(form.tech) }}
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group app-label">
+                            {{ form_label(form.experienceLevel, 'Niveau d\'expérience', {'label_attr': {'class': 'text-muted'}}) }}
+                            {{ form_widget(form.experienceLevel, {'attr': {'class': 'js-example-basic-multiple form-control','style': 'width: 100%; height: auto;'}}) }}
+                            {{ form_errors(form.experienceLevel) }}
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-12">
+                        <div class="form-group app-label">
+                            {{ form_label(form.bibliographie, 'Courte bibliographie', {'label_attr': {'class': 'text-muted'}}) }}
+                            {{ form_widget(form.bibliographie, {'attr': {'class': 'form-control resume', 'rows': '4'}}) }}
+                            {{ form_errors(form.bibliographie) }}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-8">
+                            <ul class="list-inline mb-0">
+                                <li class="list-inline-item">
+                                    <div class="input-group mt-2 mb-2">
+                                        <div class="custom-file">
+                                           
+                                            {{ form_widget(form.avatar, {'attr': {'class': 'custom-file-input', 'accept': '.png, .jpeg, .jpg', 'onchange': "updateFileName(this);"}}) }}
+                                            <label class="custom-file-label rounded" for="{{ form.avatar.vars.id }}">
+                                                <i class="mdi mdi-cloud-upload mr-1"></i>
+                                                <span id="file-name">Votre photo de profil</span>
+                                            </label>
+                                            
                                         </div>
                                     </div>
+                                </li>
+                                <li class="list-inline-item">
+                                    <h6 class="text-muted mb-0">Téléchargez uniquement des fichiers PNG ou JPEG, taille maximale : 10 Mo.</h6>
+                                </li>
+                            </ul>
+                        </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-group app-label">
-                                            <label class="text-muted">Course Title</label>
-                                            <input id="course-title" type="text" class="form-control resume" placeholder="">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12">
-                                <div class="form-group app-label">
-                                    <label>Additional Information :</label>
-                                    <textarea id="addition-information" rows="4" class="form-control resume" placeholder=""></textarea>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    {{ form_widget(form.visibilite, {'attr': {'class': 'custom-control-input'}}) }}
+                                    {{ form_label(form.visibilite, null, {'label_attr': {'class': 'custom-control-label'}}) }}
                                 </div>
                             </div>
                         </div>
-                    </form>
+
+                    </div>
+                    
+                    <div class="col-12 mt-4">
+                        {{ form_widget(form.submit, {'attr': {'class': 'submitBnt btn btn-primary'}}) }}
+                    </div>
+                    
+                    {{ form_end(form) }}
+                    
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-12 mt-5">
-                <h5 class="text-dark">Work Experience :</h5>
-            </div>
-
-            <div class="col-12 mt-3">
-                <div class="custom-form p-4 border rounded">
-                    <form>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group app-label">
-                                    <label class="text-muted">Company Name</label>
-                                    <input id="company-name" type="text" class="form-control resume" placeholder="">
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group app-label">
-                                    <label class="text-muted">Job Position</label>
-                                    <input id="job-position" type="text" class="form-control resume" placeholder="">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="form-group app-label">
-                                    <label class="text-muted">Location</label>
-                                    <div class="form-button">
-                                        <select class="nice-select rounded">
-                                            <option data-display="Search">Search</option>
-                                            <option value="1">New York</option>
-                                            <option value="2">Los Angeles</option>
-                                            <option value="3">Chicago</option>
-                                            <option value="4">Houston</option>
-                                            <option value="5">Indiana</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group app-label">
-                                            <label class="text-muted">Date From</label>
-                                            <input id="date-from" type="text" class="form-control resume" placeholder="01-Jan-2018">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group app-label">
-                                            <label class="text-muted">Date To</label>
-                                            <input id="date-to" type="text" class="form-control resume" placeholder="31-March-2019">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12">
-                                <div class="form-group app-label">
-                                    <label>Additional Information :</label>
-                                    <textarea id="addition-information-1" rows="4" class="form-control resume" placeholder=""></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        
-
-        <div class="row">
-            <div class="col-12 mt-5">
-                <h5 class="text-dark">Skills :</h5>
-            </div>
-            
-            <div class="col-12 mt-3">
-                <div class="custom-form p-4 border rounded">
-                    <form>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group app-label">
-                                    <label class="text-muted">Skills</label>
-                                    <input id="skills" type="text" class="form-control resume" placeholder="HTML, CSS, PHP, javascript, ...">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12">
-                                <div class="form-group app-label">
-                                    <label class="text-muted">Skill proficiency</label>
-                                    <input id="skill_proficiency" type="text" class="form-control resume" placeholder="75%">
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            
-            <div class="col-12 mt-4">
-                <input type="submit" id="submit" name="send" class="submitBnt btn btn-primary" value="Submit Resume">
-            </div>
-        </div>
     </div>
 </section>
 <!-- CREATE RESUME END -->
 
 <!-- subscribe start -->
-<section class="section bg-light">
+<section class="section bg-light" id="counter">
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-md-5">
@@ -386,3 +222,65 @@
 </section>
 <!-- subscribe end -->
 {% endblock %}
+{% block javascripts %}
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const input = document.getElementById('dev_profil_form_localisation');
+                const suggestionsDiv = document.getElementById('suggestions');
+
+                input.addEventListener('input', () => {
+                    const query = input.value;
+                    if (query.length > 2) {
+                        fetch(`https://api-adresse.data.gouv.fr/search/?q=${query}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                suggestionsDiv.innerHTML = '';
+                                data.features.forEach(feature => {
+                                    const div = document.createElement('div');
+                                    div.classList.add('suggestion', 'list-group-item');
+                                    div.textContent = feature.properties.label;
+                                    div.addEventListener('click', () => {
+                                        input.value = feature.properties.label;
+                                        suggestionsDiv.innerHTML = '';
+                                    });
+                                    suggestionsDiv.appendChild(div);
+                                });
+                            });
+                    } else {
+                        suggestionsDiv.innerHTML = '';
+                    }
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!suggestionsDiv.contains(e.target) && e.target !== input) {
+                        suggestionsDiv.innerHTML = '';
+                    }
+                });
+            });
+        </script>
+
+        <script>
+            function updateFileName(input) {
+                var fileName = input.value.split('\\').pop();
+                var label = input.nextElementSibling;
+                // Si aucun fichier n'est sélectionné, on garde le texte par défaut
+                label.innerText = fileName ? fileName : 'Votre photo de profil';
+            }
+        </script>
+
+		<!-- jQuery -->
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<!-- Bootstrap JS -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+		<!-- Select2 JS -->
+		<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+		<script>
+			$(document).ready(function () {
+				// Initialisation de Select2
+				$('.js-example-basic-multiple').select2({
+					allowClear: true,
+					width: 'resolve' 
+				});
+			});
+    	</script>
+	{% endblock %}

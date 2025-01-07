@@ -31,6 +31,9 @@ class Dev
     #[ORM\Column(length: 255,nullable: true)]
     private ?string $salaireMin = null;
 
+    #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    private ?int $experienceLevel = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,6 +95,18 @@ class Dev
     public function setSalaireMin(string $salaireMin): static
     {
         $this->salaireMin = $salaireMin;
+
+        return $this;
+    }
+
+    public function getExperienceLevel(): ?int
+    {
+        return $this->experienceLevel;
+    }
+
+    public function setExperienceLevel(?int $experienceLevel): static
+    {
+        $this->experienceLevel = $experienceLevel;
 
         return $this;
     }

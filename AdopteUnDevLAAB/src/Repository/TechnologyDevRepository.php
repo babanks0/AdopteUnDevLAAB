@@ -16,6 +16,15 @@ class TechnologyDevRepository extends ServiceEntityRepository
         parent::__construct($registry, TechnologyDev::class);
     }
 
+    public function remove(TechnologyDev $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
     //    /**
     //     * @return TechnologyDev[] Returns an array of TechnologyDev objects
     //     */
