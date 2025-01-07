@@ -112,6 +112,15 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_edit_profil', ['id' => $user->getId()]);
         }
 
+        if ($user->getCompany()) {
+
+            return $this->render('profil/company/edit.html.twig', [
+                'form' => $form,
+                'user' => $user
+            ]);
+           
+        }
+
         return $this->render('profil/dev/edit.html.twig', [
             'form' => $form,
             'user' => $user

@@ -18,6 +18,9 @@ class Company
     #[ORM\Column(length: 255)]
     private ?string $raisonSociale = null;
 
+    #[ORM\Column(type: Types::TEXT,nullable: true)]
+    private ?string $description = null;
+
     public function getId(): ?int
     {
         return $this->id;
