@@ -6,6 +6,7 @@ use App\Entity\Dev;
 use App\Entity\User;
 use App\Entity\TechnologyDev;
 use App\Form\DevProfilFormType;
+use App\Form\CompanyProfilFormType;
 use App\Repository\TechnologyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\TechnologyDevRepository;
@@ -114,8 +115,12 @@ class UserController extends AbstractController
 
         if ($user->getCompany()) {
 
+            $form2 = $this->createForm(CompanyProfilFormType::class, $user->getCompany(), [
+                'localisation' =>  $user->getCompany() ? $user->getLocalisation() : 'Paris',
+            ]);
+
             return $this->render('profil/company/edit.html.twig', [
-                'form' => $form,
+                'form' => $form2,
                 'user' => $user
             ]);
            

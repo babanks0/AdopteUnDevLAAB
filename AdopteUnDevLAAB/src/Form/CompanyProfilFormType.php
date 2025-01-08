@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Dev;
+use App\Entity\Company;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -43,7 +43,7 @@ class CompanyProfilFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Dev::class, // L'entité associée à ce formulaire
+            'data_class' => Company::class, // L'entité associée à ce formulaire
             'localisation' => 'Paris',
         ]);
     }
