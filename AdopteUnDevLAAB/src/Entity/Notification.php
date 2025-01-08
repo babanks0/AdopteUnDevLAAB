@@ -27,7 +27,7 @@ class Notification
     #[ORM\Column]
     private ?bool $view = false;
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }

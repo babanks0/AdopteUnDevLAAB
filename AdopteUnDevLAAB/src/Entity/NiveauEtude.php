@@ -20,7 +20,7 @@ class NiveauEtude
     #[ORM\Column(length: 255)]
     private ?string $libelle = null;
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }

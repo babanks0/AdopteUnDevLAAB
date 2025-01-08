@@ -41,7 +41,7 @@ class Poste
     private ?bool $favoris = null;
 
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }

@@ -25,7 +25,7 @@ class TechnologyPoste
     #[ORM\JoinColumn(nullable: false)]
     private ?Poste $poste = null;
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }

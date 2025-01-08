@@ -37,7 +37,7 @@ class Dev
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $experienceLevel = null;
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }

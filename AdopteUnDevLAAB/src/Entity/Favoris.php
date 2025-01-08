@@ -24,7 +24,7 @@ class Favoris
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }

@@ -26,7 +26,7 @@ class Company
     #[ORM\Column(type: Types::TEXT,nullable: true)]
     private ?string $description = null;
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }

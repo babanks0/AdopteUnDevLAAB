@@ -25,7 +25,7 @@ class NiveauEtudePoste
     #[ORM\JoinColumn(nullable: false)]
     private ?NiveauEtude $niveauEtude = null;
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }

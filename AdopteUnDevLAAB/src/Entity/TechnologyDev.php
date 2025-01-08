@@ -25,7 +25,7 @@ class TechnologyDev
     #[ORM\JoinColumn(nullable: false)]
     private ?Dev $dev = null;
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }
