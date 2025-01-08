@@ -28,8 +28,8 @@ class CompanyProfilFormType extends AbstractType
                 'mapped' => false,
                 'data' => $options['localisation'] ?? 'Paris'
             ]) 
-            ->add('Descr', TextareaType::class, [
-                'label' => 'Bibliographie',
+            ->add('description', TextareaType::class, [
+                'label' => 'Description',
             ])
             ->add('avatar', FileType::class, [
                 'label' => 'Avatar (optionnel)',

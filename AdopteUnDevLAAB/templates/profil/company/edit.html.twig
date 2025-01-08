@@ -92,19 +92,12 @@
 
                     <div class="col-md-6">
                         <div class="form-group app-label">
-                            {{ form_label(form.nom, 'Nom', {'label_attr': {'class': 'text-muted'}}) }}
-                            {{ form_widget(form.nom, {'attr': {'class': 'form-control resume', 'placeholder': 'Nom'}}) }}
-                            {{ form_errors(form.nom) }}
+                            {{ form_label(form.raisonSociale, 'Raison Sociale', {'label_attr': {'class': 'text-muted'}}) }}
+                            {{ form_widget(form.raisonSociale, {'attr': {'class': 'form-control resume', 'placeholder': 'Raison Sociale'}}) }}
+                            {{ form_errors(form.raisonSociale) }}
                         </div>
                     </div>
                     
-                    <div class="col-md-6">
-                        <div class="form-group app-label">
-                            {{ form_label(form.prenoms, 'Prénoms', {'label_attr': {'class': 'text-muted'}}) }}
-                            {{ form_widget(form.prenoms, {'attr': {'class': 'form-control resume', 'placeholder': 'Prénoms'}}) }}
-                            {{ form_errors(form.prenoms) }}
-                        </div>
-                    </div>
                     
                     <div class="col-md-6">
                         <div class="form-group app-label">
@@ -114,41 +107,18 @@
                             {{ form_errors(form.localisation) }}
                         </div>
                     </div>
-                    
-                    <div class="col-md-6">
-                        <div class="form-group app-label">
-                            {{ form_label(form.salaireMin, 'Salaire minimum', {'label_attr': {'class': 'text-muted'}}) }}
-                            {{ form_widget(form.salaireMin, {'attr': {'class': 'form-control resume', 'placeholder': '$8000'}}) }}
-                            {{ form_errors(form.salaireMin) }}
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6 technologies">
-                        <div class="app-label">
-                            {{ form_label(form.tech, 'Langages de programmation', {'label_attr': {'class': 'text-muted'}}) }}
-                            {{ form_widget(form.tech, {'attr': {'class': 'js-example-basic-multiple form-control', 'multiple': 'multiple', 'style': 'width: 100%; height: auto;'}}) }}
-                            {{ form_errors(form.tech) }}
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6">
-                        <div class="form-group app-label">
-                            {{ form_label(form.experienceLevel, 'Niveau d\'expérience', {'label_attr': {'class': 'text-muted'}}) }}
-                            {{ form_widget(form.experienceLevel, {'attr': {'class': 'js-example-basic-multiple form-control','style': 'width: 100%; height: auto;'}}) }}
-                            {{ form_errors(form.experienceLevel) }}
-                        </div>
-                    </div>
+  
                     
                     <div class="col-lg-12">
                         <div class="form-group app-label">
-                            {{ form_label(form.bibliographie, 'Courte bibliographie', {'label_attr': {'class': 'text-muted'}}) }}
-                            {{ form_widget(form.bibliographie, {'attr': {'class': 'form-control resume', 'rows': '4'}}) }}
-                            {{ form_errors(form.bibliographie) }}
+                            {{ form_label(form.description, 'Description', {'label_attr': {'class': 'text-muted'}}) }}
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control resume', 'rows': '4'}}) }}
+                            {{ form_errors(form.description) }}
                         </div>
                     </div>
                     
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item">
                                     <div class="input-group mt-2 mb-2">
@@ -169,14 +139,6 @@
                             </ul>
                         </div>
 
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <div class="custom-control custom-switch">
-                                    {{ form_widget(form.visibilite, {'attr': {'class': 'custom-control-input'}}) }}
-                                    {{ form_label(form.visibilite, null, {'label_attr': {'class': 'custom-control-label'}}) }}
-                                </div>
-                            </div>
-                        </div>
 
                     </div>
                     
