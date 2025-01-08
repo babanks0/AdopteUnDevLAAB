@@ -44,7 +44,6 @@ class RegistrationController extends AbstractController
 
             $raisonSocial ? $this->company($request,$user) : $this->dev($request,$user);
                 
-            $user->setId(uniqid());
             $user->setEmail($email);
            
             $user->setVerified(true);
