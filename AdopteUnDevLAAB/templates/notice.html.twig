@@ -1,0 +1,26 @@
+{% block content %}
+
+    {% if notice is defined and notice is not null %}
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: 'Alerte',
+                    text: '{{ my_variable|e }}', // Le contenu de la variable
+                    icon: 'warning', // Type d'icône (info, success, warning, error, etc.)
+                    showCancelButton: true, // Affiche deux boutons
+                    confirmButtonText: 'Oui',
+                    cancelButtonText: 'Non'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Action si le bouton "Oui" est cliqué
+                        console.log('Vous avez confirmé.');
+                    } else {
+                        // Action si le bouton "Non" est cliqué
+                        console.log('Vous avez annulé.');
+                    }
+                });
+            });
+        </script>
+    {% endif %}
+
+{% endblock %}

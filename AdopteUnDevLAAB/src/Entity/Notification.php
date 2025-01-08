@@ -2,16 +2,20 @@
 
 namespace App\Entity;
 
-use App\Repository\NotificationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Doctrine\UuidGenerator;
+use App\Repository\NotificationRepository;
+use App\Utils\TraitClasses\EntityTimestampableTrait;
 
 #[ORM\Entity(repositoryClass: NotificationRepository::class)]
 class Notification
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    use EntityTimestampableTrait;
+    #[ORM\Id] 
+    #[ORM\Column(type: 'guid', unique: true)] 
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')] 
+    #[ORM\CustomIdGenerator(class: UuidGenerator::class)] 
+    private ?string $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'notifications')]
     #[ORM\JoinColumn(nullable: false)]

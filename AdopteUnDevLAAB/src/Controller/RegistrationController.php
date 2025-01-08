@@ -44,7 +44,7 @@ class RegistrationController extends AbstractController
 
             $raisonSocial ? $this->company($request,$user) : $this->dev($request,$user);
                 
-
+            $user->setId(uniqid());
             $user->setEmail($email);
            
             $user->setVerified(true);
@@ -84,6 +84,7 @@ class RegistrationController extends AbstractController
         $lastName   =   $request->request->get('lastName');
         
         $dev = new Dev();
+        $dev->setId(uniqid());
         $dev->setNom($lastName);
         $dev->setPrenoms($firstName);
         $dev->setVisibilite(false);
@@ -97,7 +98,7 @@ class RegistrationController extends AbstractController
     private function company(Request $request,User $user) : void {
 
         $company = new company();
-
+        $company->setId(uniqid());
         $company->setRaisonSociale($request->request->get('name'));
         $user->setRoles(["ROLE_COMPANY"]);
         $user->setCompany($company);

@@ -1,5 +1,7 @@
 {% extends "base.html.twig" %}
 {% block content %}
+{% include 'notice.html.twig' with { 'notice': notice } %}
+
     <section class="bg-home" style="background: url('images/bg-home.jpg') center center;">
         <div class="bg-overlay"></div>
         <div class="home-center">

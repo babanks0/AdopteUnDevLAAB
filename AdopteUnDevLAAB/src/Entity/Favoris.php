@@ -2,18 +2,20 @@
 
 namespace App\Entity;
 
-use App\Repository\FavorisRepository;
-use App\Utils\TraitClasses\EntityTimestampableTrait;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\FavorisRepository;
+use Ramsey\Uuid\Doctrine\UuidGenerator;
+use App\Utils\TraitClasses\EntityTimestampableTrait;
 
 #[ORM\Entity(repositoryClass: FavorisRepository::class)]
 class Favoris
 {
     use EntityTimestampableTrait;
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Id] 
+    #[ORM\Column(type: 'guid', unique: true)] 
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')] 
+    #[ORM\CustomIdGenerator(class: UuidGenerator::class)] 
+    private ?string $id = null;
 
     #[ORM\ManyToOne]
     private ?Poste $poste = null;
