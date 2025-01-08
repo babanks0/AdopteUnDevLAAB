@@ -34,6 +34,9 @@ class Dev
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $experienceLevel = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $titre = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -107,6 +110,18 @@ class Dev
     public function setExperienceLevel(?int $experienceLevel): static
     {
         $this->experienceLevel = $experienceLevel;
+
+        return $this;
+    }
+
+    public function getTitre(): ?string
+    {
+        return $this->titre;
+    }
+
+    public function setTitre(?string $titre): static
+    {
+        $this->titre = $titre;
 
         return $this;
     }

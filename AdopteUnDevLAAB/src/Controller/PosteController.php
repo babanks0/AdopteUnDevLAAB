@@ -8,6 +8,8 @@ use App\Entity\TechnologyPoste;
 use App\Form\PosteFormType;
 use App\Repository\NiveauEtudePosteRepository;
 use App\Repository\NiveauEtudeRepository;
+use App\Repository\PosteRepository;
+use App\Repository\TechnologyPosteRepository;
 use App\Repository\TechnologyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,21 +22,27 @@ class PosteController extends AbstractController
     private NiveauEtudeRepository $niveauEtudeRepository;
     private NiveauEtudePosteRepository $niveauEtudePosteRepository;
     private TechnologyRepository $technologyRepository;
+    private PosteRepository $posteRepository;
+    private TechnologyPosteRepository $technologyPosteRepository;
     private EntityManagerInterface $manager;
     public function __construct(
         NiveauEtudeRepository $niveauEtudeRepository,
         NiveauEtudePosteRepository $niveauEtudePosteRepository,
         TechnologyRepository $technologyRepository,
         EntityManagerInterface $manager,
+        PosteRepository $posteRepository,
+        TechnologyPosteRepository $technologyPosteRepository,
     ) {
         $this->niveauEtudeRepository = $niveauEtudeRepository;
         $this->niveauEtudePosteRepository = $niveauEtudePosteRepository;
         $this->technologyRepository = $technologyRepository;
         $this->manager = $manager;
+        $this->posteRepository = $posteRepository;
+        $this->technologyPosteRepository = $technologyPosteRepository;
     }
 
     #[Route('/poste', name: 'app_poste')]
-    public function index(Request $request): Response
+    public function createPoste(Request $request): Response
     {
         $poste = new Poste();
         $form = $this->createForm(PosteFormType::class, $poste);
@@ -66,6 +74,23 @@ class PosteController extends AbstractController
             'niveaux' => $niveaux,
             'technologies' => $technologies,
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/job', name: 'app_find_job')]
+    public function findJob():Response{
+        $postesData = [];
+        $postes = $this->posteRepository->findBy(['deleted' => false]);
+        foreach($postes as $poste){
+            $technology = $this->technologyPosteRepository->findBy(['deleted' => false, 'poste' => $poste]);
+            $datas = [
+                'poste' => $poste, 
+                'technologies' => $technology
+            ];
+            $postesData[] = $datas;
+        }
+        return $this->render('poste/trouver_job.html.twig', [
+            'postes' => $postesData
         ]);
     }
 }

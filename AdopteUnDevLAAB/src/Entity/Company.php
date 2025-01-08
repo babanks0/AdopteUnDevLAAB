@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Repository\CompanyRepository;
 use App\Utils\TraitClasses\EntityTimestampableTrait;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CompanyRepository::class)]
@@ -18,9 +17,6 @@ class Company
 
     #[ORM\Column(length: 255)]
     private ?string $raisonSociale = null;
-
-    #[ORM\Column(type: Types::TEXT,nullable: true)]
-    private ?string $description = null;
 
     public function getId(): ?int
     {

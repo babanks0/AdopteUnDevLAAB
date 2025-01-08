@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Dev;
+
 use App\Entity\User;
 use App\Entity\TechnologyDev;
 use App\Form\DevProfilFormType;
@@ -110,15 +110,6 @@ class UserController extends AbstractController
             // Rediriger ou afficher un message de succès
             $this->addFlash('success', 'Profil mis à jour avec succès');
             return $this->redirectToRoute('app_edit_profil', ['id' => $user->getId()]);
-        }
-
-        if ($user->getCompany()) {
-
-            return $this->render('profil/company/edit.html.twig', [
-                'form' => $form,
-                'user' => $user
-            ]);
-           
         }
 
         return $this->render('profil/dev/edit.html.twig', [
