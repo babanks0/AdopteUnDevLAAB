@@ -41,4 +41,17 @@ class Company
 
         return $this;
     }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $bibliographie): static
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
 }
