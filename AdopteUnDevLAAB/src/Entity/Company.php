@@ -47,7 +47,7 @@ class Company
         return $this->description;
     }
 
-    public function setDescription(string $bibliographie): static
+    public function setDescription(string $description): static
     {
         $this->description = $description;
 
