@@ -2,19 +2,21 @@
 
 namespace App\Entity;
 
-use App\Repository\PosteRepository;
-use App\Utils\TraitClasses\EntityTimestampableTrait;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PosteRepository;
+use Ramsey\Uuid\Doctrine\UuidGenerator;
+use App\Utils\TraitClasses\EntityTimestampableTrait;
 
 #[ORM\Entity(repositoryClass: PosteRepository::class)]
 class Poste
 {
     use EntityTimestampableTrait;
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Id] 
+    #[ORM\Column(type: 'guid', unique: true)] 
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')] 
+    #[ORM\CustomIdGenerator(class: UuidGenerator::class)] 
+    private ?string $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $titre = null;
@@ -39,7 +41,7 @@ class Poste
     private ?bool $favoris = null;
 
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }

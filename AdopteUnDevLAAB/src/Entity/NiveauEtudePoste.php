@@ -2,18 +2,20 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Doctrine\UuidGenerator;
 use App\Repository\NiveauEtudePosteRepository;
 use App\Utils\TraitClasses\EntityTimestampableTrait;
-use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: NiveauEtudePosteRepository::class)]
 class NiveauEtudePoste
 {
     use EntityTimestampableTrait;
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Id] 
+    #[ORM\Column(type: 'guid', unique: true)] 
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')] 
+    #[ORM\CustomIdGenerator(class: UuidGenerator::class)] 
+    private ?string $id = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
@@ -23,7 +25,7 @@ class NiveauEtudePoste
     #[ORM\JoinColumn(nullable: false)]
     private ?NiveauEtude $niveauEtude = null;
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }

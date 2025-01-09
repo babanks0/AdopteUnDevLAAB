@@ -2,20 +2,23 @@
 
 namespace App\Controller;
 
-use App\Entity\NiveauEtudePoste;
 use App\Entity\Poste;
-use App\Entity\TechnologyPoste;
 use App\Form\PosteFormType;
 use App\Repository\NiveauEtudePosteRepository;
 use App\Repository\NiveauEtudeRepository;
 use App\Repository\PosteRepository;
 use App\Repository\TechnologyPosteRepository;
+use App\Entity\Notification;
+use App\Entity\TechnologyDev;
+use App\Entity\TechnologyPoste;
+use App\Entity\NiveauEtudePoste;
+use App\Entity\User;
 use App\Repository\TechnologyRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PosteController extends AbstractController
 {
@@ -29,9 +32,9 @@ class PosteController extends AbstractController
         NiveauEtudeRepository $niveauEtudeRepository,
         NiveauEtudePosteRepository $niveauEtudePosteRepository,
         TechnologyRepository $technologyRepository,
+        TechnologyPosteRepository $technologyPosteRepository,
         EntityManagerInterface $manager,
         PosteRepository $posteRepository,
-        TechnologyPosteRepository $technologyPosteRepository,
     ) {
         $this->niveauEtudeRepository = $niveauEtudeRepository;
         $this->niveauEtudePosteRepository = $niveauEtudePosteRepository;
@@ -78,13 +81,14 @@ class PosteController extends AbstractController
     }
 
     #[Route('/job', name: 'app_find_job')]
-    public function findJob():Response{
+    public function findJob(): Response
+    {
         $postesData = [];
         $postes = $this->posteRepository->findBy(['deleted' => false]);
-        foreach($postes as $poste){
+        foreach ($postes as $poste) {
             $technology = $this->technologyPosteRepository->findBy(['deleted' => false, 'poste' => $poste]);
             $datas = [
-                'poste' => $poste, 
+                'poste' => $poste,
                 'technologies' => $technology
             ];
             $postesData[] = $datas;
@@ -92,5 +96,31 @@ class PosteController extends AbstractController
         return $this->render('poste/trouver_job.html.twig', [
             'postes' => $postesData
         ]);
+    }
+
+    private function sendNotification(Poste $post)
+    {
+        $technologiesPosts = $this->manager->getRepository(TechnologyPoste::class)->findBy(['poste' => $post]);
+
+        array_map(function ($technology) {
+            $technologyDevs =  $this->manager->getRepository(TechnologyDev::class)->findBy(['technology' => $technology]);
+            foreach ($technologyDevs as $technologyDev) {
+
+                $user = $this->manager->getRepository(User::class)->findOneByDev($technologyDev->getDev());
+
+                $notification = $this->manager->getRepository(Notification::class)->find0neBy(['user' => $user, 'post' => $post]);
+
+                if (!$notification) {
+                    $notification = new Notification();
+                    $notification->setUser($user);
+                    $notification->setPost($post);
+                    $notification->setView(false);
+                }
+
+                $this->manager->persist($notification);
+            }
+        }, $technologiesPosts);
+
+        $this->manager->flush();
     }
 }

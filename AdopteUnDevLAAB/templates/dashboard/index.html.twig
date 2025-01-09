@@ -47,6 +47,7 @@
 {% endblock %}
 {% block content %}
     <section class="bg-home" style="background: url('{{ asset('assets/images/bg.jpg') }}');">
+    {% include 'notice.html.twig' with { 'notice': notice } %}
         <div class="bg-overlay"></div>
         <div class="home-center">
             <div class="home-desc-center">

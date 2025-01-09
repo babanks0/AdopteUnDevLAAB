@@ -2,13 +2,16 @@
 
 namespace App\Controller;
 
+
 use App\Repository\DevRepository;
+use App\Repository\NotificationRepository;
 use App\Repository\PosteRepository;
 use App\Repository\TechnologyDevRepository;
 use App\Repository\TechnologyPosteRepository;
 use App\Repository\TechnologyRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Notification;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -27,7 +30,7 @@ class DashboardController extends AbstractController
         DevRepository $devRepository,
         TechnologyPosteRepository $technologyPosteRepository,
         TechnologyDevRepository $technologyDevRepository,
-        
+        private NotificationRepository $notificationRepository
     ){
         $this->posteRepository = $posteRepository;
         $this->technologyRepository = $technologyRepository;
@@ -62,9 +65,13 @@ class DashboardController extends AbstractController
             ];
             $postesData[] = $datas;
         }
+
+        $notification = $this->notificationRepository->findOneBy(["user"=>$this->getUser(),"view"=>false]);
+
         return $this->render('dashboard/index.html.twig', [
             'postes'=> $postesData,
             'devs' => $devData,
+            "notice"=> $notification
         ]);
     }
 }
