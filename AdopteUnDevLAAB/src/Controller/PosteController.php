@@ -100,27 +100,28 @@ class PosteController extends AbstractController
 
     private function sendNotification(Poste $post)
     {
-        $technologiesPosts = $this->manager->getRepository(TechnologyPoste::class)->findBy(['poste' => $post]);
+        $technologiesPosts = $this->manager->getRepository(TechnologyPoste::class)->findBy(['poste'=>$post]);
 
         array_map(function ($technology) {
-            $technologyDevs =  $this->manager->getRepository(TechnologyDev::class)->findBy(['technology' => $technology]);
+            $technologyDevs =  $this->manager->getRepository(TechnologyDev::class)->findBy(['technology'=>$technology]);
             foreach ($technologyDevs as $technologyDev) {
 
                 $user = $this->manager->getRepository(User::class)->findOneByDev($technologyDev->getDev());
 
-                $notification = $this->manager->getRepository(Notification::class)->find0neBy(['user' => $user, 'post' => $post]);
+                $notification = $this->manager->getRepository(Notification::class)->find0neBy(['user'=>$user,'post'=>$post]);
 
-                if (!$notification) {
+                if(!$notification){
                     $notification = new Notification();
                     $notification->setUser($user);
                     $notification->setPost($post);
                     $notification->setView(false);
                 }
-
+                
                 $this->manager->persist($notification);
             }
         }, $technologiesPosts);
-
+        
         $this->manager->flush();
+
     }
 }

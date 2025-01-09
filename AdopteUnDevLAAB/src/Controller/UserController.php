@@ -113,8 +113,6 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_edit_profil', ['id' => $user->getId()]);
         }
 
-<<<<<<< HEAD
-=======
         if ($user->getCompany()) {
 
             $form2 = $this->createForm(CompanyProfilFormType::class, $user->getCompany(), [
@@ -127,8 +125,6 @@ class UserController extends AbstractController
             ]);
            
         }
-
->>>>>>> 93b13ba71c4f8f8c20f09a9a910d94d71caf762b
         return $this->render('profil/dev/edit.html.twig', [
             'form' => $form,
             'user' => $user
