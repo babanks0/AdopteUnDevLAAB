@@ -65,6 +65,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Notification::class, mappedBy: 'user')]
     private Collection $notifications;
 
+    #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
+    private ?int $view = 0;
+
     public function __construct()
     {
         $this->initializeTimestampable();
@@ -255,6 +258,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $notification->setUser(null);
             }
         }
+        return $this;
+    }
+
+    public function getView(): ?int
+    {
+        return $this->view;
+    }
+
+    public function setView(int $view): static
+    {
+        $this->view = $view;
+
         return $this;
     }
 }
