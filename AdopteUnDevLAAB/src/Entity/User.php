@@ -68,6 +68,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
+        $this->initializeTimestampable();
         $this->notifications = new ArrayCollection();
     }
 

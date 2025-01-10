@@ -20,7 +20,36 @@
                     }
                 });
             });
+            
         </script>
+
+        
     {% endif %}
+
+    {% for flash in app.flashes('success') %}
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: 'Succès',
+                    text: '{{ flash|e }}', // Message flash
+                    icon: 'success', // Icône pour succès
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>
+    {% endfor %}
+
+    {% for flash in app.flashes('error') %}
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: 'Erreur',
+                    text: '{{ flash|e }}', // Message flash
+                    icon: 'error', // Icône pour erreur
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>
+    {% endfor %}
 
 {% endblock %}

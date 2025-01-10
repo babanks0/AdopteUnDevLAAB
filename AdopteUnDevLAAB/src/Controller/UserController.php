@@ -31,12 +31,17 @@ class UserController extends AbstractController
     }
 
     #[Route('/profil', name: 'app_view_profil')]
+    #[IsGranted('ROLE_USER')]
     public function viewProfil(): Response
     {
-        return $this->render('dashboard/index.html.twig', [
-            'controller_name' => 'DashboardController',
+        $technologies = $this->technologyDevRepository->findByDev($this->getUser()->getDev());
+
+        return $this->render('profil/dev/view.html.twig', [
+            'technologies' => $technologies,
         ]);
     }
+
+
 
     #[Route('/profil/edit/{id}', name: 'app_edit_profil')]
     #[IsGranted('ROLE_USER')]
