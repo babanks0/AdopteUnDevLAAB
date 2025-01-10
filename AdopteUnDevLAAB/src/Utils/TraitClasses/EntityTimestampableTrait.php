@@ -18,14 +18,21 @@ trait EntityTimestampableTrait
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $updatedAt;
-
-    #[ORM\Column(type: 'boolean',nullable: false, options: ['default' => false])]
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
     private $deleted;
 
     public function __construct()
     {
+        
         $this->updatedAt = new \DateTime();
         $this->createdAt = new \DateTime();
+        $this->deleted = false;
+    }
+
+    public function initializeTimestampable(): void
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
         $this->deleted = false;
     }
 

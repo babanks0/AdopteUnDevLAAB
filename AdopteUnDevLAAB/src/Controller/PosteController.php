@@ -115,7 +115,7 @@ class PosteController extends AbstractController
 
                 $notification = $this->manager->getRepository(Notification::class)->find0neBy(['user' => $user, 'post' => $post]);
 
-                if (!$notification) {
+                if(!$notification && $technologyDev->getDev()->getExperienceLevel() >= $post->getNiveauExperience() && (int)$technologyDev->getDev()->getSalaireMin() >= (int)$post->getSalaire()){
                     $notification = new Notification();
                     $notification->setUser($user);
                     $notification->setPost($post);
