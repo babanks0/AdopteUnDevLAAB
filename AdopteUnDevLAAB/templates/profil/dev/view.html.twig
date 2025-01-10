@@ -53,13 +53,15 @@
         <div class="row">
             <div class="col-lg-12 mt-3">
                 <div class="border rounded p-4">
-                    <p class="text-muted">Aliquam erat volutpat Etiam vitae tortor Morbi vestibulum volutpat enim Aliquam nunc Nunc sed turpis sed mollis eros et ultrices tempus mauris ipsum aliquam libero non adipiscing dolor urna a orci Nulla porta dolor. Class aptent taciti sociosqu ad litora torquent per conubia nostra inceptos hymenaeos pellentesque dapibus hendrerit tortor Praesent egestas tristique nibh sed a libero cras us varius donec vitae orci sed dolor rutrum auctor fusce egestas elit eget lorem.</p>
+                    <p class="text-muted">
+                        {{ app.user.dev.bibliographie ?? "Non renseigné"}}
+                    </p>
 
                     {# <p class="text-muted">Libero venenatis faucibus ullam quis ante tiam sit amet orci eget eros faucibus tincidunt ed fringilla mauris sit amet nibh Donec sodales sagittis magna ed consequat leo eget bibendum sodales augue velit cursus nunc quis gravida magna mi libero usce vulputate eleifend sapien estibulum purus qua scelerisque ut mollis sed nonummy id metus ullam accumsan lorem Vivamus elementum semper enean vulputate eleifend tellus enean leo ligula porttitor.</p> #}
                     
                     <ul class="list-inline pt-3 border-top mb-0">
                         <li class="list-inline-item mr-3">
-                            <a href="" class="text-muted f-15 mb-0"><i class="mdi mdi-map-marker mr-2"></i>{{ app.user.localisation ? app.user.localisation : "Non renseigné"}}</a>
+                            <i class="mdi mdi-map-marker mr-2"></i>{{ app.user.localisation ? app.user.localisation : "Non renseigné"}}
                         </li>
 
                         {# <li class="list-inline-item mr-3">
@@ -67,15 +69,15 @@
                         </li> #}
 
                         <li class="list-inline-item mr-3">
-                            <a href="" class="text-muted f-15 mb-0"><i class="mdi mdi-email mr-2"></i>{{ app.user.email }}</a>
+                           <i class="mdi mdi-email mr-2"></i>{{ app.user.email }}
                         </li>
 
                         <li class="list-inline-item mr-3">
-                            <a href="" class="text-muted f-15 mb-0"><i class="mdi mdi-email mr-2"></i>{{ app.user.dev.salaireMin ? app.user.dev.salaireMin : 0}}$</a>
+                            <i class="mdi mdi-currency-usd mr-2"></i>Salaire min : {{ app.user.dev.salaireMin ? app.user.dev.salaireMin ~"$" : "Non renseigné"}}
                         </li>
 
                         <li class="list-inline-item mr-3">
-                            <a href="" class="text-muted f-15 mb-0"><i class="mdi mdi-email mr-2"></i>Année d'expérience : {{ app.user.dev.experienceLevel ?  app.user.dev.experienceLevel : 0}}</a>
+                            <i class="mdi mdi-briefcase-outline mr-2"></i>Année d'expérience : {{ app.user.dev.experienceLevel ?  app.user.dev.experienceLevel : "Non renseigné"}}
                         </li>
 
                         {# <li class="list-inline-item mr-3">
@@ -91,7 +93,7 @@
                 <h6 class="mb-0 text-uppercase">Compétences :</h6>
                 {% for technology in technologies %}
                     <div class="progress-box mt-4">
-                        <h6 class="title text-muted">{{technology.technology.title}}</h6>
+                        <h6 class="title text-muted">{{technology.technology.titre}}</h6>
                         <div class="progress">
                             <div class="progress-bar progress-bar-striped position-relative bg-primary" style="width:84%;">
                                 <div class="progress-value d-block text-muted h6">84%</div>
@@ -99,10 +101,15 @@
                         </div>
                     </div><!--end process box-->
                 {% else %}
-                    <h6 class="title text-muted">{{"Aucune compétence renseignéé"| trans }}</h6>
+                    <h6 class="title text-muted">{{"Aucune compétence renseignée"| trans }}</h6>
                 {% endfor %}
         
             </div>
+
+            <div class="col-md-3 offset-md-7 mt-4 pt-2">
+                <a href="" class="btn btn-primary submitBnt" >{{"Modifier"| trans}}</a>
+            </div>
+
 
            
         </div>         
