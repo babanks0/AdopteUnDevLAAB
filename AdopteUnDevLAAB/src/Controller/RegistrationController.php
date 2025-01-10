@@ -55,7 +55,7 @@ class RegistrationController extends AbstractController
             $this->entityManager->persist($user);
             
             $this->entityManager->flush();
-            // return new JsonResponse(["status"=>"success","msg"=>"Inscription effecutée avec succès","url"=>$this->generateUrl('app_login',[],0)]);
+            return new JsonResponse(["status"=>"success","msg"=>"Inscription effecutée avec succès","url"=>$this->generateUrl('app_login',[],0)]);
 
         }
 

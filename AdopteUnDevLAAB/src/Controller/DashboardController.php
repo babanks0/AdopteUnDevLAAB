@@ -64,7 +64,6 @@ class DashboardController extends AbstractController
             $postesData[] = $datas;
         }
         $notification = $this->notificationRepository->findOneBy(["user"=>$this->getUser(),"view"=>false]);
-
         return $this->render('dashboard/index.html.twig', [
             'postes'=> $postesData,
             'devs' => $devData,
