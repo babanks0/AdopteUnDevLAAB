@@ -42,9 +42,12 @@ class DashboardController extends AbstractController
     #[Route('/', name: 'app_dashboard')]
     public function index(): Response
     {
+        $user = $this->getUser();
         $postesData = [];
         $devData  = [];
-        $users = $this->userRepository->findBy(['deleted' => false]);
+        $users = $this->userRepository->findAllExceptCurrentUser([
+            $this->getUser()
+        ]);
         foreach($users  as $user){
             $technologyDev =  $this->technologyDevRepository->findBy(['deleted' => false, 'user' => $user]);
             $datas = [

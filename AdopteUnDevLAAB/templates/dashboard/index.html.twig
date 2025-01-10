@@ -171,44 +171,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-12 mt-4 pt-2">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination job-pagination mb-0 justify-content-center">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
-                                        <i class="mdi mdi-chevron-double-left f-15"></i>
-                                    </a>
-                                </li>
-                                <li class="page-item active">
-                                    <a class="page-link" href="#">
-                                        1
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">
-                                        2
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">
-                                        3
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">
-                                        4
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">
-                                        <i class="mdi mdi-chevron-double-right f-15"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
+                <div class="registration-form-box  d-flex justify-content-center mt-5">
+                <a href="{{ path('app_find_job') }}" id="submit" name="send" class="submitBnt btn btn-primary ">
+                    Voir plus
+                </a>
+            </div>
             </div>
         </section>
         <!-- all jobs start -->
@@ -220,36 +187,8 @@
                             <h4 class="title title-line pb-5">
                                 Dévéloppeurs les plus vues
                             </h4>
-                            <p class="text-muted para-desc mx-auto mb-1">
-                                Liste des développeurs les plus populaires sur la plateforme
-                            </p>
+                        
                         </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-lg-9 text-center mt-4 pt-2">
-                        <ul class="nav nav-pills nav nav-pills bg-white rounded nav-justified flex-column flex-sm-row" id="pills-tab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link rounded active" id="recent-job-tab" data-toggle="pill" href="#recent-job" role="tab" aria-controls="recent-job" aria-selected="true">
-                                    Développeurs php
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link rounded" id="featured-job-tab" data-toggle="pill" href="#featured-job" role="tab" aria-controls="featured-job" aria-selected="false">
-                                    Java
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link rounded" id="part-job-tab" data-toggle="pill" href="#part-job" role="tab" aria-controls="part-job" aria-selected="false">
-                                    Flutter
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link rounded" id="full-job-tab" data-toggle="pill" href="#full-job" role="tab" aria-controls="full-job" aria-selected="false">
-                                    Angular
-                                </a>
-                            </li>
-                        </ul>
                     </div>
                 </div>
                 <div class="row">
@@ -270,18 +209,14 @@
                                                 <div class="p-4">
                                                     <div class="row align-items-center">
                                                         <div class="col-md-2">
-                                                            <div class="mo-mb-2">
-                                                                <img src="{{ asset('uploads/avatars/' ~ dev.user.avatar) }}" alt="" class="img-fluid mx-auto d-block"></div>
+                                                            <div class="mo-mb-2 rounded" >
+                                                                <img src="{{ asset('uploads/avatars/' ~ dev.user.avatar) }}" alt="" class="img-fluid mx-auto d-block" style="height: 100px;width:100px"/>
+                                                            </div>
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <div>
-                                                                    {# <h5 class="f-18">
-                                                                        <a href="#" class="text-dark">
-                                                                            {{ dev.dev.titre }}
-                                                                        </a>
-                                                                    </h5> #}
                                                                     <p class="text-muted mb-0">
-                                                                        {{ dev.user.dev.bibliographie }}
+                                                                        {{ dev.user.dev.bibliographie|slice(0, 130) ~ (dev.user.dev.bibliographie|length > 130 ? '...' : '') }}
                                                                     </p>
                                                                 </div>
                                                             </div>
@@ -329,7 +264,7 @@
                                                             <div class="col-md-6"></div>
                                                             <div class="col-md-2">
                                                                 <div>
-                                                                    <a href="#" class="text-primary">
+                                                                    <a href="{{path('app_dev_list')}}" class="text-primary">
                                                                         Voir plus
                                                                         <i class="mdi mdi-chevron-double-right"></i>
                                                                     </a>
@@ -363,44 +298,11 @@
                         </div>
                     </div>
                     <!-- end row -->
-                    <div class="row">
-                        <div class="col-lg-12 mt-4 pt-2">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination job-pagination mb-0 justify-content-center">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
-                                            <i class="mdi mdi-chevron-double-left f-15"></i>
-                                        </a>
-                                    </li>
-                                    <li class="page-item active">
-                                        <a class="page-link" href="#">
-                                            1
-                                        </a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">
-                                            2
-                                        </a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">
-                                            3
-                                        </a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">
-                                            4
-                                        </a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">
-                                            <i class="mdi mdi-chevron-double-right f-15"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
+                                                <div class="registration-form-box  d-flex justify-content-center mt-5">
+                                                    <a href="{{ path('app_dev_list') }}" id="submit" name="send" class="submitBnt btn btn-primary ">
+                                                        Voir plus
+                                                    </a>
+                                                </div>
                 </div>
             <!-- end containar -->
             </section>
@@ -686,10 +588,7 @@
                                                                 let userId = clickedElement.data('user-id');
                                                                 console.log(userId);
                                                                 console.log(posteId);
-                                                                $.ajax({
-                                                            url: '
-                                                            {{ path('add_favoris_poste') }}
-                                                            ',
+                                                                $.ajax({url: ' {{ path('add_favoris_poste') }}',
                                                                 type: 'POST',
                                                                 dataType: 'json',
                                                                 data: {
@@ -697,9 +596,7 @@
                                                                 'user_id': userId
                                                                 },
                                                                 success: function (response) {
-                                                            clickedElement.html("
-                                                            <i class='mdi mdi-heart' style='color:#2f55d4; font-size:20px'></i>
-                                                            ");
+                                                            clickedElement.html("<i class='mdi mdi-heart' style='color:#2f55d4; font-size:20px'></i>");
                                                                 }
                                                                 });
                                                                 });

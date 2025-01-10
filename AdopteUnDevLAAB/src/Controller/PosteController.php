@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Poste;
 use App\Form\PosteFormType;
+use App\Repository\FavorisRepository;
 use App\Repository\NiveauEtudePosteRepository;
 use App\Repository\NiveauEtudeRepository;
 use App\Repository\PosteRepository;
@@ -30,6 +31,7 @@ class PosteController extends AbstractController
     private TechnologyPosteRepository $technologyPosteRepository;
     private EntityManagerInterface $manager;
     private UserRepository $userRepository;
+    private FavorisRepository $favorisRepository;
     public function __construct(
         NiveauEtudeRepository $niveauEtudeRepository,
         NiveauEtudePosteRepository $niveauEtudePosteRepository,
@@ -38,6 +40,7 @@ class PosteController extends AbstractController
         EntityManagerInterface $manager,
         PosteRepository $posteRepository,
         UserRepository $userRepository,
+        FavorisRepository $favorisRepository,
     ) {
         $this->niveauEtudeRepository = $niveauEtudeRepository;
         $this->niveauEtudePosteRepository = $niveauEtudePosteRepository;
@@ -46,6 +49,7 @@ class PosteController extends AbstractController
         $this->posteRepository = $posteRepository;
         $this->technologyPosteRepository = $technologyPosteRepository;
         $this->userRepository = $userRepository;
+        $this->favorisRepository = $favorisRepository;
     }
 
     #[Route('/poste', name: 'app_poste')]
@@ -78,7 +82,7 @@ class PosteController extends AbstractController
             $this->addFlash('success', 'Votre poste a été enregistré avec succès.');
             return $this->redirectToRoute('app_dashboard');
         }
-        return $this->render('poste/index.html.twig', [
+        return $this->render('poste/create.html.twig', [
             'niveaux' => $niveaux,
             'technologies' => $technologies,
             'form' => $form,
@@ -185,5 +189,34 @@ class PosteController extends AbstractController
         ]);
     }
 
+    #[Route('/poste_details/{id}', name: 'app_details_poste')]
+    public function favoris(Poste $poste): Response
+    {
+        $user =  $this->userRepository->findOneBy(['company' => $poste->getCompany()]);
+        return $this->render('poste/details.html.twig', [
+            'poste' => $poste, 
+            'user' => $user
+        ]);
+    } 
+
+    #[Route('/favoris', name: 'app_favoris_poste')]
+    public function  listeFavoris(): Response
+    {
+        $postesData = [];
+        $favoris = $this->favorisRepository->findBy(['deleted' => false]);
+        $postes = $this->posteRepository->findBy(['deleted' => false, ]);
+        foreach($favoris as $poste){
+            $technology = $this->technologyPosteRepository->findBy(['deleted' => false, 'poste' => $poste->getPoste()]);
+            $datas = [
+                'poste' => $poste->getPoste(), 
+                'technologies' => $technology
+            ];
+            $postesData[] = $datas;
+        }
+        return $this->render('poste/favoris.html.twig', [
+            'postes'=> $postesData,
+
+        ]);
+    }
 
 }

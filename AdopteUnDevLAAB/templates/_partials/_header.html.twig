@@ -53,17 +53,14 @@
 	<div
 		class="container">
 		<!-- Logo container-->
-		<div>
-			<a href="index.html" class="logo">
-				<img src="{{asset('assets/images/logo-light.png')}}" alt="" class="logo-light" height="18"/>
-				<img src="{{asset('assets/images/logo-dark.png')}}" alt="" class="logo-dark" height="18"/>
-			</a>
+		<div class="" style="font-size: 30px">
+		AdopteDevLAAB
 		</div>
 		<div class="buy-button">
 			
 
 				{% if app.user %}
-				<a href="{{path('app_edit_profil',{'id': app.user.id})}}" class="btn btn-primary"><i class="mdi mdi-account mr-2"></i>
+				<a href="{{path('app_view_profil',{'id': app.user.id})}}" class="btn btn-primary"><i class="mdi mdi-account mr-2"></i>
 					Profil</a>
 				{% else %}
 				<a href="{{path('app_login')}}" class="btn btn-primary"><i class="mdi mdi-login"></i>
@@ -96,7 +93,7 @@
 			<ul class="navigation-menu">
 
 				<li>
-					<a href="index.html">Accueil</a>
+					<a href="{{path('app_dashboard')}}">Accueil</a>
 				</li>
 				<li>
 					<a href="{{path('app_find_job')}}">Trouvez un job</a>
