@@ -19,7 +19,7 @@ trait EntityTimestampableTrait
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $updatedAt;
 
-    #[ORM\Column(type: 'boolean',nullable: true, options: ['default' => false])]
+    #[ORM\Column(type: 'boolean',nullable: false, options: ['default' => false])]
     private $deleted;
 
     public function __construct()

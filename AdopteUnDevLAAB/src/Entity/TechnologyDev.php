@@ -23,7 +23,9 @@ class TechnologyDev
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Dev $dev = null;
+    private ?User $user = null;
+
+
 
     public function getId(): ?string
     {
@@ -42,14 +44,14 @@ class TechnologyDev
         return $this;
     }
 
-    public function getDev(): ?Dev
+    public function getUser(): ?User
     {
-        return $this->dev;
+        return $this->user;
     }
 
-    public function setDev(?Dev $dev): static
+    public function setUser(?User $user): static
     {
-        $this->dev = $dev;
+        $this->user = $user;
 
         return $this;
     }

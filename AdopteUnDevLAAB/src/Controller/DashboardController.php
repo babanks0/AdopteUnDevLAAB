@@ -44,13 +44,11 @@ class DashboardController extends AbstractController
     {
         $postesData = [];
         $devData  = [];
-        $devs = $this->devRepository->findBy(['deleted' => false]);
-        foreach($devs as $dev){
-            $user = $this->userRepository->findOneBy(['deleted' => false, 'dev' => $dev]);
-            $technologyDev =  $this->technologyDevRepository->findBy(['deleted' => false, 'dev' => $dev]);
+        $users = $this->userRepository->findBy(['deleted' => false]);
+        foreach($users  as $user){
+            $technologyDev =  $this->technologyDevRepository->findBy(['deleted' => false, 'user' => $user]);
             $datas = [
                 'user' => $user, 
-                'dev'  => $dev,
                 'technologies' => $technologyDev,
             ];
             $devData[] = $datas;
@@ -65,7 +63,6 @@ class DashboardController extends AbstractController
             ];
             $postesData[] = $datas;
         }
-
         $notification = $this->notificationRepository->findOneBy(["user"=>$this->getUser(),"view"=>false]);
 
         return $this->render('dashboard/index.html.twig', [
@@ -73,5 +70,6 @@ class DashboardController extends AbstractController
             'devs' => $devData,
             "notice"=> $notification
         ]);
+        
     }
 }

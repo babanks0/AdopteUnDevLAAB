@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Dev;
-use App\Entity\User;
 use App\Entity\Company;
+use App\Entity\User;
 use App\Security\EmailVerifier;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
@@ -32,13 +32,12 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security): Response
     {
         if ($request->getMethod() == 'POST'){
-
             $email      =   $request->request->get('email');
             $userExist  =   $this->entityManager->getRepository(User::class)->findOneByEmail($email);
 
             if ($userExist) return new JsonResponse(["status"=>"exist","msg"=>"Cet email est déjà associé à un compte existant"]);
 
-            $user       =   new User();
+            $user   = new User();
 
             $raisonSocial = $request->request->get('name',null);
 
@@ -53,24 +52,10 @@ class RegistrationController extends AbstractController
             
             // encode the plain password
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
-
             $this->entityManager->persist($user);
+            
             $this->entityManager->flush();
-
-            // generate a signed url and email it to the user
-            // $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-            //     (new TemplatedEmail())
-            //         ->from(new Address('support@unlaab.com', 'LAAB'))
-            //         ->to((string) $user->getEmail())
-            //         ->subject('Please Confirm your Email')
-            //         ->htmlTemplate('registration/confirmation_email.html.twig')
-            // );
-
-            // do anything else you need here, like send an email
-
-         //   $security->login($user, AppCustomAuthenticator::class, 'main');
-
-            return new JsonResponse(["status"=>"success","msg"=>"Inscription effecutée avec succès","url"=>$this->generateUrl('app_login',[],0)]);
+            // return new JsonResponse(["status"=>"success","msg"=>"Inscription effecutée avec succès","url"=>$this->generateUrl('app_login',[],0)]);
 
         }
 

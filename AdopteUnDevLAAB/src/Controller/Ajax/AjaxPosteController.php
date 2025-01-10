@@ -32,13 +32,13 @@ class AjaxPosteController extends AbstractController
         $this->companyRepository = $companyRepository;
         $this->userRepository = $userRepository;
         $this->manager = $manager;
-        $this->technologyPosteRepository = $technologyPosteRepository;  
+        $this->technologyPosteRepository = $technologyPosteRepository;
     }
     #[Route('/ajax/poste', name: 'add_favoris_poste', options: ['expose' => true])]
     public function favoris(Request $request): JsonResponse
     {
-        $poste = $this->posteRepository->findOneBy(['deleted' => false, 'id' =>  $request->request->get('poste_id')]);
-        $company =  $this->companyRepository->findOneBy(['deleted' => false, 'id' => $request->request->get('user_id')]);
+        $poste = $this->posteRepository->findOneBy(['deleted' => false, 'id' => $request->request->get('poste_id')]);
+        $company = $this->companyRepository->findOneBy(['deleted' => false, 'id' => $request->request->get('user_id')]);
         $favoris = new Favoris();
         $favoris->setPoste($poste)->setUser($this->userRepository->findOneBy(['deleted' => false, 'company' => $company]));
         $this->manager->persist($favoris);
@@ -55,24 +55,28 @@ class AjaxPosteController extends AbstractController
         $postes = $this->posteRepository->findBy(['deleted' => false]);
         $datas = [];
         foreach ($postes as $poste) {
-            
-            $resultat = strstr($poste->getTitre(), $motCles);
-            if ($resultat) {
+            $titreCorrespond = $motCles ? stripos($poste->getTitre(), $motCles) !== false : true;
+            $localisationCorrespond = $localisation ? stripos($poste->getLocalisation(), $localisation) !== false : true;
+            if (
+                ($motCles && !$localisation && $titreCorrespond) ||
+                (!$motCles && $localisation && $localisationCorrespond) || 
+                ($motCles && $localisation && $titreCorrespond && $localisationCorrespond)
+            ) { 
                 $datas[] = $poste;
             }
         }
         $posteDatas = [];
-        foreach($datas as $item){
+        foreach ($datas as $item) {
             $technology = $this->technologyPosteRepository->findBy(['deleted' => false, 'poste' => $item]);
             $data = [
-                'poste' => $item, 
+                'poste' => $item,
                 'technologies' => $technology
             ];
             $posteDatas[] = $data;
         }
         $html = $this->renderView('ajax_poste/jobs.html.twig', [
-            'postes'=> $posteDatas,
+            'postes' => $posteDatas,
         ]);
-        return new JsonResponse(['success' => true, 'datas' => $html]);
+        return new JsonResponse(['success' => true, 'html' => $html]);
     }
 }

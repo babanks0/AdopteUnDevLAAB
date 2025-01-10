@@ -14,6 +14,7 @@ use App\Entity\TechnologyPoste;
 use App\Entity\NiveauEtudePoste;
 use App\Entity\User;
 use App\Repository\TechnologyRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,6 +29,7 @@ class PosteController extends AbstractController
     private PosteRepository $posteRepository;
     private TechnologyPosteRepository $technologyPosteRepository;
     private EntityManagerInterface $manager;
+    private UserRepository $userRepository;
     public function __construct(
         NiveauEtudeRepository $niveauEtudeRepository,
         NiveauEtudePosteRepository $niveauEtudePosteRepository,
@@ -35,6 +37,7 @@ class PosteController extends AbstractController
         TechnologyPosteRepository $technologyPosteRepository,
         EntityManagerInterface $manager,
         PosteRepository $posteRepository,
+        UserRepository $userRepository,
     ) {
         $this->niveauEtudeRepository = $niveauEtudeRepository;
         $this->niveauEtudePosteRepository = $niveauEtudePosteRepository;
@@ -42,6 +45,7 @@ class PosteController extends AbstractController
         $this->manager = $manager;
         $this->posteRepository = $posteRepository;
         $this->technologyPosteRepository = $technologyPosteRepository;
+        $this->userRepository = $userRepository;
     }
 
     #[Route('/poste', name: 'app_poste')]
@@ -56,17 +60,18 @@ class PosteController extends AbstractController
             $poste->setLocalisation($request->request->get('localisation'));
             $poste->setDescription($request->request->get('description'));
             $poste->setCompany($this->getUser()->getCompany());
+            $poste->setFavoris(false);
             $this->manager->persist($poste);
             foreach ($request->request->all('states') as $item) {
                 $technologyPoste = new TechnologyPoste();
                 $technologyPoste->setPoste($poste)
-                    ->setTechnology($this->technologyRepository->find((int) $item));
+                    ->setTechnology($this->technologyRepository->find( $item));
                 $this->manager->persist($technologyPoste);
             }
             foreach ($request->request->all('etudes') as $item) {
                 $niveauEtudePoste = new NiveauEtudePoste();
                 $niveauEtudePoste->setPoste($poste)
-                    ->setNiveauEtude($this->niveauEtudeRepository->find((int) $item));
+                    ->setNiveauEtude($this->niveauEtudeRepository->find( $item));
                 $this->manager->persist($niveauEtudePoste);
             }
             $this->manager->flush();
@@ -100,28 +105,85 @@ class PosteController extends AbstractController
 
     private function sendNotification(Poste $post)
     {
-        $technologiesPosts = $this->manager->getRepository(TechnologyPoste::class)->findBy(['poste'=>$post]);
+        $technologiesPosts = $this->manager->getRepository(TechnologyPoste::class)->findBy(['poste' => $post]);
 
         array_map(function ($technology) {
-            $technologyDevs =  $this->manager->getRepository(TechnologyDev::class)->findBy(['technology'=>$technology]);
+            $technologyDevs = $this->manager->getRepository(TechnologyDev::class)->findBy(['technology' => $technology]);
             foreach ($technologyDevs as $technologyDev) {
 
                 $user = $this->manager->getRepository(User::class)->findOneByDev($technologyDev->getDev());
 
-                $notification = $this->manager->getRepository(Notification::class)->find0neBy(['user'=>$user,'post'=>$post]);
+                $notification = $this->manager->getRepository(Notification::class)->find0neBy(['user' => $user, 'post' => $post]);
 
-                if(!$notification){
+                if (!$notification) {
                     $notification = new Notification();
                     $notification->setUser($user);
                     $notification->setPost($post);
                     $notification->setView(false);
                 }
-                
+
                 $this->manager->persist($notification);
             }
         }, $technologiesPosts);
-        
+
         $this->manager->flush();
 
     }
+
+    #[Route('/poste_by_company', name: 'app_poste_by_company')]
+    public function posteByCompany(): Response
+    {
+        $postesData = [];
+
+        $user = $this->getUser();
+        if ($user->getCompany() != null) {
+            $postes = $this->posteRepository->findBy(['deleted' => false, 'company'=> $user->getCompany()]);
+            foreach ($postes as $poste) {
+                $technology = $this->technologyPosteRepository->findBy(['deleted' => false, 'poste' => $poste]);
+                $datas = [
+                    'poste' => $poste,
+                    'technologies' => $technology
+                ];
+                $postesData[] = $datas;
+            }
+        }
+        return $this->render('poste/poste_by_company.html.twig', [
+            'postes' => $postesData
+        ]);
+
+    }
+
+    #[Route('/poste_by_company', name: 'app_poste_favoris_by_company')]
+    public function posteFavorisByCompany(): Response
+    {
+        $postesData = [];
+
+        $user = $this->getUser();
+        if ($user->getCompany() != null) {
+            $postes = $this->posteRepository->findBy(['deleted' => false, 'company'=> $user->getCompany()]);
+            foreach ($postes as $poste) {
+                $technology = $this->technologyPosteRepository->findBy(['deleted' => false, 'poste' => $poste]);
+                $datas = [
+                    'poste' => $poste,
+                    'technologies' => $technology
+                ];
+                $postesData[] = $datas;
+            }
+        }
+        return $this->render('poste/poste_by_company.html.twig', [
+            'postes' => $postesData
+        ]);
+    }
+
+    #[Route('/poste_details/{id}', name: 'app_details_poste')]
+    public function detailsPoste(Poste $poste): Response
+    {
+        $user =  $this->userRepository->findOneBy(['company' => $poste->getCompany()]);
+        return $this->render('poste/details.html.twig', [
+            'poste' => $poste, 
+            'user' => $user
+        ]);
+    }
+
+
 }
