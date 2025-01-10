@@ -33,7 +33,7 @@ class UserController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function viewProfil(): Response
     {
-        $technologies = $this->technologyDevRepository->findByDev($this->getUser()->getDev());
+        $technologies = $this->technologyDevRepository->findByUser($this->getUser());
 
         return $this->render('profil/dev/view.html.twig', [
             'technologies' => $technologies,
@@ -50,15 +50,15 @@ class UserController extends AbstractController
 
         $dev = $user ? $user->getDev() : null;
 
-        $userTechnologies = $this->technologyDevRepository->findBy(['dev' => $user->getDev() ?? null]);
+        $userTechnologies = $this->technologyDevRepository->findBy(['user' => $user]);
 
         $userTechnologyIds = array_map(function ($technologyDev) {
             return $technologyDev->getTechnology(); 
         }, $userTechnologies);
 
-        $form = $this->createForm(DevProfilFormType::class, $dev, [
+        $form = $this->createForm(DevProfilFormType::class, $user->getDev(), [
             'technologies' => $technologies,
-            'localisation' => $dev ? $user->getLocalisation() : 'Paris',
+            'localisation' => $user->getLocalisation() ?? 'Paris',
             'default_technologies' => $userTechnologyIds ?? [],
         ]);
 
@@ -100,7 +100,7 @@ class UserController extends AbstractController
                     $technologyDev = new TechnologyDev();
 
                         $technologyDev->setTechnology($technology);
-                        $technologyDev->setDev($dev);
+                        $technologyDev->setUser($user);
                         $this->em->persist($technologyDev);
                 }
             }
