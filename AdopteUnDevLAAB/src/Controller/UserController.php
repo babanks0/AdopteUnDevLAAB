@@ -2,10 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Dev;
+
 use App\Entity\User;
 use App\Entity\TechnologyDev;
 use App\Form\DevProfilFormType;
+use App\Form\CompanyProfilFormType;
 use App\Repository\TechnologyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\TechnologyDevRepository;
@@ -112,6 +113,18 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_edit_profil', ['id' => $user->getId()]);
         }
 
+        if ($user->getCompany()) {
+
+            $form2 = $this->createForm(CompanyProfilFormType::class, $user->getCompany(), [
+                'localisation' =>  $user->getCompany() ? $user->getLocalisation() : 'Paris',
+            ]);
+
+            return $this->render('profil/company/edit.html.twig', [
+                'form' => $form2,
+                'user' => $user
+            ]);
+           
+        }
         return $this->render('profil/dev/edit.html.twig', [
             'form' => $form,
             'user' => $user

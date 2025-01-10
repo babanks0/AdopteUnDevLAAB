@@ -6,15 +6,18 @@ use App\Repository\DevRepository;
 use App\Utils\TraitClasses\EntityTimestampableTrait;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Doctrine\UuidGenerator;
+
 
 #[ORM\Entity(repositoryClass: DevRepository::class)]
 class Dev
 {
     use EntityTimestampableTrait;
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Id] 
+    #[ORM\Column(type: 'guid', unique: true)] 
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')] 
+    #[ORM\CustomIdGenerator(class: UuidGenerator::class)] 
+    private ?string $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
@@ -34,7 +37,7 @@ class Dev
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $experienceLevel = null;
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -106,7 +109,7 @@ class Dev
 
     public function setExperienceLevel(?int $experienceLevel): static
     {
-        $this->experienceLevel = $experienceLevel;
+        $this->experienceLevel = $experienceLevel; 
 
         return $this;
     }
