@@ -48,13 +48,17 @@ class DashboardController extends AbstractController
         $users = $this->userRepository->findAllExceptCurrentUser([
             $this->getUser()
         ]);
+
         foreach($users  as $user){
-            $technologyDev =  $this->technologyDevRepository->findBy(['deleted' => false, 'user' => $user]);
-            $datas = [
-                'user' => $user, 
-                'technologies' => $technologyDev,
-            ];
-            $devData[] = $datas;
+            if($user->getDev() != null){
+                $technologyDev =  $this->technologyDevRepository->findBy(['deleted' => false, 'user' => $user]);
+                $datas = [
+                    'user' => $user, 
+                    'technologies' => $technologyDev,
+                ];
+                $devData[] = $datas;
+            }
+           
         }
 
         $postes = $this->posteRepository->findBy(['deleted' => false]);
