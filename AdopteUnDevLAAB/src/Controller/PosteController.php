@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class PosteController extends AbstractController
 {
@@ -200,11 +201,12 @@ class PosteController extends AbstractController
     } 
 
     #[Route('/favoris', name: 'app_favoris_poste')]
+    #[IsGranted('ROLE_USER')]
     public function  listeFavoris(): Response
     {
+        $user = $this->getUser();
         $postesData = [];
-        $favoris = $this->favorisRepository->findBy(['deleted' => false]);
-        $postes = $this->posteRepository->findBy(['deleted' => false, ]);
+        $favoris = $this->favorisRepository->findBy([]);
         foreach($favoris as $poste){
             $technology = $this->technologyPosteRepository->findBy(['deleted' => false, 'poste' => $poste->getPoste()]);
             $datas = [
