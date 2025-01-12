@@ -6,6 +6,7 @@ use App\Entity\Dev;
 use App\Entity\User;
 use App\Entity\TechnologyDev;
 use App\Form\DevProfilFormType;
+use App\Form\CompanyProfilFormType;
 use App\Repository\TechnologyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\TechnologyDevRepository;
@@ -42,68 +43,47 @@ class UserController extends AbstractController
 
 
 
-    #[Route('/profil/edit/{id}', name: 'app_edit_profil')]
+    #[Route('/profil/edit', name: 'app_edit_profil')]
     #[IsGranted('ROLE_USER')]
-    public function editProfil(User $user,Request $request): Response
+    public function editProfil(Request $request): Response
     {
-        $technologies = $this->technologyRepository->findBy(['deleted' => false]);
+        $user = $this->getUser();
+        if ($user->getDev()) {
 
-        $dev = $user ? $user->getDev() : null;
+            $technologies = $this->technologyRepository->findBy(['deleted' => false]);
 
-        $userTechnologies = $this->technologyDevRepository->findBy(['user' => $user]);
+            $userTechnologies = $this->technologyDevRepository->findBy(['user' => $user]);
 
-        $userTechnologyIds = array_map(function ($technologyDev) {
-            return $technologyDev->getTechnology(); 
-        }, $userTechnologies);
+            $userTechnologyIds = array_map(function ($technologyDev) {
+                return $technologyDev->getTechnology(); 
+            }, $userTechnologies);
 
-        $form = $this->createForm(DevProfilFormType::class, $user->getDev(), [
-            'technologies' => $technologies,
-            'localisation' => $user->getLocalisation() ?? 'Paris',
-            'default_technologies' => $userTechnologyIds ?? [],
-        ]);
+            $form = $this->createForm(DevProfilFormType::class, $user->getDev(), [
+                'technologies' => $technologies,
+                'localisation' => $user->getLocalisation() ?? 'Paris',
+                'default_technologies' => $userTechnologyIds ?? [],
+            ]);
 
-        // Soumission du formulaire
+            $link = 'profil/dev/edit.html.twig';
+        }
+        else {
+            $form = $this->createForm(CompanyProfilFormType::class, $user->getCompany(), [
+                'localisation' => $user->getLocalisation() ?? 'Paris',
+            ]);
+
+            $link = 'profil/company/edit.html.twig';
+        }
+        
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
             // Si un fichier avatar a été téléchargé
             $avatarFile = $form->get('avatar')->getData();
             if ($avatarFile) {
-                // Définir le nom du fichier
-                $newFilename = uniqid().'.'.$avatarFile->guessExtension();
-
-                try {
-                    // Déplacer le fichier dans le dossier 'uploads/avatars'
-                    $avatarFile->move(
-                        $this->getParameter('avatars_directory'),
-                        $newFilename
-                    );
-                } catch (IOExceptionInterface $exception) {
-                    $this->addFlash('error', 'Erreur lors de l\'envoi de l\'avatar.');
-                    return $this->redirectToRoute('app_edit_profil', ['id' => $user->getId()]);
-                }
-
-                // Mettre à jour l'avatar de l'utilisateur
-                $user->setAvatar($newFilename);
+                $this->addAvatar($avatarFile,$user);
             }
 
-            // Récupérer les technologies sélectionnées
-            $technologies = $form->get('tech')->getData();
-            if ($technologies) {
-
-                array_map(function ($technologyDev) {
-                    $this->technologyDevRepository->remove($technologyDev);
-                }, $userTechnologies);
-                // On peut traiter les technologies associées à Dev ici
-                // Exemple : ajouter les technologies à la relation
-                foreach ($technologies as $technology) {
-                    $technologyDev = new TechnologyDev();
-
-                        $technologyDev->setTechnology($technology);
-                        $technologyDev->setUser($user);
-                        $this->em->persist($technologyDev);
-                }
-            }
+            if($user->getDev()) $this->editDev($user);
 
             $localisation = $form->get('localisation')->getData();
     
@@ -111,14 +91,51 @@ class UserController extends AbstractController
             $this->em->persist($user);
             $this->em->flush();
 
-            // Rediriger ou afficher un message de succès
             $this->addFlash('success', 'Profil mis à jour avec succès');
-            return $this->redirectToRoute('app_edit_profil', ['id' => $user->getId()]);
+            return $this->redirectToRoute('app_edit_profil');
         }
 
-        return $this->render('profil/dev/edit.html.twig', [
+        return $this->render($link, [
             'form' => $form,
             'user' => $user
         ]);
+    }
+
+    private function editDev(User $user,Request $request){
+
+        $technologies = $form->get('tech')->getData();
+        if ($technologies) {
+
+            array_map(function ($technologyDev) {
+                $this->technologyDevRepository->remove($technologyDev);
+            }, $userTechnologies);
+
+            foreach ($technologies as $technology) {
+                $technologyDev = new TechnologyDev();
+
+                    $technologyDev->setTechnology($technology);
+                    $technologyDev->setUser($user);
+                    $this->em->persist($technologyDev);
+            }
+        }
+
+    }
+
+    private function addAvatar($avatarFile,User $user){
+
+            $newFilename = uniqid().'.'.$avatarFile->guessExtension();
+
+            try {
+                $avatarFile->move(
+                    $this->getParameter('avatars_directory'),
+                    $newFilename
+                );
+            } catch (IOExceptionInterface $exception) {
+                $this->addFlash('error', 'Erreur lors de l\'envoi de l\'avatar.');
+                return $this->redirectToRoute('app_edit_profil');
+            }
+
+            $user->setAvatar($newFilename);
+            $this->em->persist($user);
     }
 }
