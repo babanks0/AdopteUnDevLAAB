@@ -17,7 +17,7 @@
                             {{ app.user.company.raisonSociale }}
                         {% endif %}
                     </h5>
-                    <p class="text-white-50 h6 mb-2">{{"Developpeur"| trans}} </p>
+                    <p class="text-white-50 h6 mb-2">{{ app.user.dev ? "Developpeur"| trans : "Entreprise"| trans}} </p>
                     <p class="text-white-50 h6 mb-2"><i class="mdi mdi-eye-outline mr-2"></i>6 vues de profil</p>
 
                     <ul class="candidates-profile-icons list-inline mb-3">
@@ -46,7 +46,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h4 class="text-dark">{{"Bibliographie"| trans}}</h4>
+                <h4 class="text-dark">{{ app.user.dev ? "Bibliographie"| trans : "Description"| trans}}</h4>
             </div>
         </div>
 
@@ -54,11 +54,13 @@
             <div class="col-lg-12 mt-3">
                 <div class="border rounded p-4">
                     <p class="text-muted">
+                        {% if app.user.dev %}
                         {{ app.user.dev.bibliographie ?? "Non renseigné"}}
+                        {% else %}
+                        {{ app.user.company.description ?? "Non renseigné"}}
+                        {% endif %}
                     </p>
 
-                    {# <p class="text-muted">Libero venenatis faucibus ullam quis ante tiam sit amet orci eget eros faucibus tincidunt ed fringilla mauris sit amet nibh Donec sodales sagittis magna ed consequat leo eget bibendum sodales augue velit cursus nunc quis gravida magna mi libero usce vulputate eleifend sapien estibulum purus qua scelerisque ut mollis sed nonummy id metus ullam accumsan lorem Vivamus elementum semper enean vulputate eleifend tellus enean leo ligula porttitor.</p> #}
-                    
                     <ul class="list-inline pt-3 border-top mb-0">
                         <li class="list-inline-item mr-3">
                             <i class="mdi mdi-map-marker mr-2"></i>{{ app.user.localisation ? app.user.localisation : "Non renseigné"}}
@@ -71,7 +73,7 @@
                         <li class="list-inline-item mr-3">
                            <i class="mdi mdi-email mr-2"></i>{{ app.user.email }}
                         </li>
-
+                        {% if app.user.dev %}
                         <li class="list-inline-item mr-3">
                             <i class="mdi mdi-currency-usd mr-2"></i>Salaire min : {{ app.user.dev.salaireMin ? app.user.dev.salaireMin ~"$" : "Non renseigné"}}
                         </li>
@@ -79,6 +81,7 @@
                         <li class="list-inline-item mr-3">
                             <i class="mdi mdi-briefcase-outline mr-2"></i>Année d'expérience : {{ app.user.dev.experienceLevel ?  app.user.dev.experienceLevel : "Non renseigné"}}
                         </li>
+                        {% endif %}
 
                         {# <li class="list-inline-item mr-3">
                             <a href="" class="text-muted f-15 mb-0"><i class="mdi mdi-cellphone-iphone mr-2"></i>123 456 7890</a>
@@ -88,7 +91,8 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" id="counter">
+            {% if app.user.dev %}
             <div class="col-md-12 mt-4 pt-2">
                 <h6 class="mb-0 text-uppercase">Compétences :</h6>
                 {% for technology in technologies %}
@@ -105,9 +109,10 @@
                 {% endfor %}
         
             </div>
+            {% endif %}
 
             <div class="col-md-4 offset-md-8 mt-4 pt-2 buy-button">
-                <a href="{{path('app_edit_profil',{'id': app.user.id })}}" class="btn btn-primary" >{{"Modifier mes informations"| trans}}</a>
+                <a href="{{path('app_edit_profil')}}" class="btn btn-primary" >{{"Modifier mes informations"| trans}}</a>
             </div>
 
 

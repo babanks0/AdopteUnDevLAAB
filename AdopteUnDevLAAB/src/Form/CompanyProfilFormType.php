@@ -37,7 +37,7 @@ class CompanyProfilFormType extends AbstractType
                 'attr' => ['accept' => '.png, .jpeg, .jpg'], // Types de fichiers acceptés
                 'mapped' => false,
             ])
-            ->add('submit', SubmitType::class, ['label' => 'Modifier']);
+            ->add('submit', SubmitType::class, ['label' => 'Valider mes informations']);
     }
 
     public function configureOptions(OptionsResolver $resolver)

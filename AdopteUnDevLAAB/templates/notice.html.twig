@@ -1,23 +1,19 @@
 {% block content %}
 
     {% if notice is defined and notice is not null %}
+        
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
-                    title: 'Alerte',
-                    text: '{{ my_variable|e }}', // Le contenu de la variable
-                    icon: 'warning', // Type d'icône (info, success, warning, error, etc.)
-                    showCancelButton: true, // Affiche deux boutons
-                    confirmButtonText: 'Oui',
-                    cancelButtonText: 'Non'
+                    text: "Une nouvelle offre correspond à votre profil ! Cliquez sur 'Voir' pour en découvrir les détails.", 
+                    icon: 'info', 
+                    showCancelButton: true, 
+                    confirmButtonText: 'Voir',
+                    cancelButtonText: 'Ignorer'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Action si le bouton "Oui" est cliqué
-                        console.log('Vous avez confirmé.');
-                    } else {
-                        // Action si le bouton "Non" est cliqué
-                        console.log('Vous avez annulé.');
-                    }
+                        window.location.href = "{{ path('app_details_poste', { id: notice.post.id }) }}";
+                    } 
                 });
             });
             
@@ -30,10 +26,11 @@
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
-                    title: 'Succès',
-                    text: '{{ flash|e }}', // Message flash
-                    icon: 'success', // Icône pour succès
-                    confirmButtonText: 'OK'
+                    position: "top-end",
+                    icon: "success",
+                    title: "{{ flash|e }}",
+                    showConfirmButton: false,
+                    timer: 3500
                 });
             });
         </script>
@@ -43,10 +40,11 @@
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
-                    title: 'Erreur',
-                    text: '{{ flash|e }}', // Message flash
-                    icon: 'error', // Icône pour erreur
-                    confirmButtonText: 'OK'
+                    position: "top-end",
+                    icon: "error",
+                    title: "{{ flash|e }}",
+                    showConfirmButton: false,
+                    timer: 3500
                 });
             });
         </script>

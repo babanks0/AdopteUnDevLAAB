@@ -70,7 +70,7 @@ class DevProfilFormType extends AbstractType
                 'required' => false,  // Si tu veux que ce champ soit optionnel
                 'attr' => ['class' => 'custom-control-input'],  // Applique la classe de Bootstrap
             ])
-            ->add('submit', SubmitType::class, ['label' => 'Soumettre']);
+            ->add('submit', SubmitType::class, ['label' => 'Valider mes informations']);
     }
 
     public function configureOptions(OptionsResolver $resolver)
