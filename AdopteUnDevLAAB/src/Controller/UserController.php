@@ -39,7 +39,8 @@ class UserController extends AbstractController
         $technologies = $this->technologyDevRepository->findByUser($user);
 
         return $this->render('profil/dev/view.html.twig', [
-            'technologies' => $technologies,
+            'technologies' =>   $technologies,
+            'user'         =>   $user
         ]);
     }
 

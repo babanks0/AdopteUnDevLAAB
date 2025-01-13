@@ -81,6 +81,7 @@ class PosteController extends AbstractController
             }
             $this->manager->flush();
             $this->addFlash('success', 'Votre poste a été enregistré avec succès.');
+            $this->sendNotification($pposte);
             return $this->redirectToRoute('app_dashboard');
         }
         return $this->render('poste/create.html.twig', [

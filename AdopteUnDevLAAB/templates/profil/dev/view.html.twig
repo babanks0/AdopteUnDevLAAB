@@ -9,15 +9,15 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="candidates-profile-details text-center">
-                    <img src="{{ asset(app.user.avatar is not null ? 'uploads/avatars/' ~ app.user.avatar : 'assets/images/employers/img-1.jpg') }}" height="150" alt="" class="d-block mx-auto shadow rounded-pill mb-4">
+                    <img src="{{ asset(user.avatar is not null ? 'uploads/avatars/' ~ user.avatar : 'assets/images/employers/img-1.jpg') }}" height="150" alt="" class="d-block mx-auto shadow rounded-pill mb-4">
                     <h5 class="text-white mb-2">
-                        {% if app.user.dev %}
-                               {{ app.user.dev.nom ~ " " ~ app.user.dev.prenoms }}
+                        {% if user.dev %}
+                               {{ user.dev.nom ~ " " ~ user.dev.prenoms }}
                             {% else %}
-                            {{ app.user.company.raisonSociale }}
+                            {{ user.company.raisonSociale }}
                         {% endif %}
                     </h5>
-                    <p class="text-white-50 h6 mb-2">{{ app.user.dev ? "Developpeur"| trans : "Entreprise"| trans}} </p>
+                    <p class="text-white-50 h6 mb-2">{{ user.dev ? "Developpeur"| trans : "Entreprise"| trans}} </p>
                     <p class="text-white-50 h6 mb-2"><i class="mdi mdi-eye-outline mr-2"></i>6 vues de profil</p>
 
                     <ul class="candidates-profile-icons list-inline mb-3">
@@ -46,7 +46,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h4 class="text-dark">{{ app.user.dev ? "Bibliographie"| trans : "Description"| trans}}</h4>
+                <h4 class="text-dark">{{ user.dev ? "Bibliographie"| trans : "Description"| trans}}</h4>
             </div>
         </div>
 
@@ -54,16 +54,16 @@
             <div class="col-lg-12 mt-3">
                 <div class="border rounded p-4">
                     <p class="text-muted">
-                        {% if app.user.dev %}
-                        {{ app.user.dev.bibliographie ?? "Non renseigné"}}
+                        {% if user.dev %}
+                        {{ user.dev.bibliographie ?? "Non renseigné"}}
                         {% else %}
-                        {{ app.user.company.description ?? "Non renseigné"}}
+                        {{ user.company.description ?? "Non renseigné"}}
                         {% endif %}
                     </p>
 
                     <ul class="list-inline pt-3 border-top mb-0">
                         <li class="list-inline-item mr-3">
-                            <i class="mdi mdi-map-marker mr-2"></i>{{ app.user.localisation ? app.user.localisation : "Non renseigné"}}
+                            <i class="mdi mdi-map-marker mr-2"></i>{{ user.localisation ? user.localisation : "Non renseigné"}}
                         </li>
 
                         {# <li class="list-inline-item mr-3">
@@ -71,15 +71,15 @@
                         </li> #}
 
                         <li class="list-inline-item mr-3">
-                           <i class="mdi mdi-email mr-2"></i>{{ app.user.email }}
+                           <i class="mdi mdi-email mr-2"></i>{{ user.email }}
                         </li>
-                        {% if app.user.dev %}
+                        {% if user.dev %}
                         <li class="list-inline-item mr-3">
-                            <i class="mdi mdi-currency-usd mr-2"></i>Salaire min : {{ app.user.dev.salaireMin ? app.user.dev.salaireMin ~"$" : "Non renseigné"}}
+                            <i class="mdi mdi-currency-usd mr-2"></i>Salaire min : {{ user.dev.salaireMin ? user.dev.salaireMin ~"$" : "Non renseigné"}}
                         </li>
 
                         <li class="list-inline-item mr-3">
-                            <i class="mdi mdi-briefcase-outline mr-2"></i>Année d'expérience : {{ app.user.dev.experienceLevel ?  app.user.dev.experienceLevel : "Non renseigné"}}
+                            <i class="mdi mdi-briefcase-outline mr-2"></i>Année d'expérience : {{ user.dev.experienceLevel ?  user.dev.experienceLevel : "Non renseigné"}}
                         </li>
                         {% endif %}
 
@@ -92,7 +92,7 @@
         </div>
 
         <div class="row" id="counter">
-            {% if app.user.dev %}
+            {% if user.dev %}
             <div class="col-md-12 mt-4 pt-2">
                 <h6 class="mb-0 text-uppercase">Compétences :</h6>
                 {% for technology in technologies %}
@@ -111,10 +111,13 @@
             </div>
             {% endif %}
 
+            {%  if app.user and app.user == user %}
+
             <div class="col-md-4 offset-md-8 mt-4 pt-2 buy-button">
                 <a href="{{path('app_edit_profil')}}" class="btn btn-primary" >{{"Modifier mes informations"| trans}}</a>
             </div>
 
+            {% endif %}
 
            
         </div>         
