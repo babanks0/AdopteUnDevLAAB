@@ -3,17 +3,18 @@
 namespace App\Controller;
 
 
+use App\Entity\Notification;
 use App\Repository\DevRepository;
-use App\Repository\NotificationRepository;
+use App\Repository\UserRepository;
 use App\Repository\PosteRepository;
+use App\Repository\TechnologyRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\NotificationRepository;
 use App\Repository\TechnologyDevRepository;
 use App\Repository\TechnologyPosteRepository;
-use App\Repository\TechnologyRepository;
-use App\Repository\UserRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Entity\Notification;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DashboardController extends AbstractController
 {
@@ -30,7 +31,8 @@ class DashboardController extends AbstractController
         DevRepository $devRepository,
         TechnologyPosteRepository $technologyPosteRepository,
         TechnologyDevRepository $technologyDevRepository,
-        private NotificationRepository $notificationRepository
+        private NotificationRepository $notificationRepository,
+        private EntityManagerInterface $em
     ){
         $this->posteRepository = $posteRepository;
         $this->technologyRepository = $technologyRepository;
@@ -68,7 +70,14 @@ class DashboardController extends AbstractController
             ];
             $postesData[] = $datas;
         }
-        $notification = $this->notificationRepository->findOneBy(["user"=>$this->getUser(),"view"=>false]);
+        $notification = $this->em->getRepository(Notification::class)->findOneBy(["user"=>$this->getUser(),"view"=>false]);
+        if ($notification) {
+            $notification->setView(true);
+            $this->em->persist($notification);
+            $this->em->flush();
+        }
+        
+
         return $this->render('dashboard/index.html.twig', [
             'postes'=> $postesData,
             'devs' => $devData,

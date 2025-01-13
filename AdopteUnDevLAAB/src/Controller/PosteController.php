@@ -116,11 +116,11 @@ class PosteController extends AbstractController
             $technologyDevs = $this->manager->getRepository(TechnologyDev::class)->findBy(['technology' => $technology]);
             foreach ($technologyDevs as $technologyDev) {
 
-                $user = $this->manager->getRepository(User::class)->findOneByDev($technologyDev->getDev());
+                $user = $technologyDev->getUser();
 
                 $notification = $this->manager->getRepository(Notification::class)->find0neBy(['user' => $user, 'post' => $post]);
 
-                if(!$notification && $technologyDev->getDev()->getExperienceLevel() >= $post->getNiveauExperience() && (int)$technologyDev->getDev()->getSalaireMin() >= (int)$post->getSalaire()){
+                if(!$notification && $user->getDev()->getExperienceLevel() >= $post->getNiveauExperience() && (int)$user->getDev()->getSalaireMin() >= (int)$post->getSalaire()){
                     $notification = new Notification();
                     $notification->setUser($user);
                     $notification->setPost($post);

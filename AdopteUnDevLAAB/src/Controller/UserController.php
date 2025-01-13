@@ -31,10 +31,12 @@ class UserController extends AbstractController
     }
 
     #[Route('/profil', name: 'app_view_profil')]
-    #[IsGranted('ROLE_USER')]
-    public function viewProfil(): Response
+    // #[IsGranted('ROLE_USER')]
+    public function viewProfil(Request $request): Response
     {
-        $technologies = $this->technologyDevRepository->findByUser($this->getUser());
+        $userId = $request->get('id',null);
+        $user = $this->em->getRepository(User::class)->findOneById($userId) ?? $this->getUser();
+        $technologies = $this->technologyDevRepository->findByUser($user);
 
         return $this->render('profil/dev/view.html.twig', [
             'technologies' => $technologies,
