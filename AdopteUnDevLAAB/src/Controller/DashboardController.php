@@ -45,9 +45,7 @@ class DashboardController extends AbstractController
         $user = $this->getUser();
         $postesData = [];
         $devData  = [];
-        $users = $this->userRepository->findAllExceptCurrentUser([
-            $this->getUser()
-        ]);
+        $users = $this->userRepository->findAllExceptCurrentUser($this->getUser());
 
         foreach($users  as $user){
             if($user->getDev() != null){

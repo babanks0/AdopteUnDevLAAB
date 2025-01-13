@@ -35,11 +35,15 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     public function findAllExceptCurrentUser($currentUserId)
     {
+        
         return $this->createQueryBuilder('u')
             ->where('u.deleted = :deleted')
-            ->andWhere('u.id != :currentUserId')
+            ->andWhere('(:currentUserId IS NULL OR u.id != :currentUserId)')
+            ->andWhere('u.dev IS NOT NULL')
             ->setParameter('deleted', false)
             ->setParameter('currentUserId', $currentUserId)
+            ->orderBy('u.view', 'DESC')
+            ->setMaxResults(10)
             ->getQuery()
             ->getResult();
     }
