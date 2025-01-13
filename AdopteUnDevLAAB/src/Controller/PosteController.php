@@ -54,6 +54,7 @@ class PosteController extends AbstractController
     }
 
     #[Route('/poste', name: 'app_poste')]
+    #[IsGranted('ROLE_USER')]
     public function createPoste(Request $request): Response
     {
         $poste = new Poste();
@@ -191,16 +192,6 @@ class PosteController extends AbstractController
             'user' => $user
         ]);
     }
-
-    #[Route('/poste_details/{id}', name: 'app_details_poste')]
-    public function favoris(Poste $poste): Response
-    {
-        $user =  $this->userRepository->findOneBy(['company' => $poste->getCompany()]);
-        return $this->render('poste/details.html.twig', [
-            'poste' => $poste, 
-            'user' => $user
-        ]);
-    } 
 
     #[Route('/favoris', name: 'app_favoris_poste')]
     #[IsGranted('ROLE_USER')]
