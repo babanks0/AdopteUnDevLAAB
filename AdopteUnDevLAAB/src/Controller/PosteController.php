@@ -112,16 +112,16 @@ class PosteController extends AbstractController
     private function sendNotification(Poste $post)
     {
         $technologiesPosts = $this->manager->getRepository(TechnologyPoste::class)->findBy(['poste' => $post]);
-
         array_map(function ($technology) {
-            $technologyDevs = $this->manager->getRepository(TechnologyDev::class)->findBy(['technology' => $technology]);
+            
+            $technologyDevs = $this->manager->getRepository(TechnologyDev::class)->findBy(['technology' => $technology->getTechnology()]);
             foreach ($technologyDevs as $technologyDev) {
-
+                $post = $technology->getPoste();
                 $user = $technologyDev->getUser();
 
-                $notification = $this->manager->getRepository(Notification::class)->find0neBy(['user' => $user, 'post' => $post]);
+                $notification = $this->manager->getRepository(Notification::class)->findOneBy(['user' => $user, 'post' => $post]);
 
-                if(!$notification && $user->getDev()->getExperienceLevel() >= $post->getNiveauExperience() && (int)$user->getDev()->getSalaireMin() >= (int)$post->getSalaire()){
+                if(!$notification && $user->getDev()->getExperienceLevel() >= $post->getNiveauExperience() && (int)$user->getDev()->getSalaireMin() <= (int)$post->getSalaire()){
                     $notification = new Notification();
                     $notification->setUser($user);
                     $notification->setPost($post);
@@ -129,6 +129,7 @@ class PosteController extends AbstractController
                 }
 
                 $this->manager->persist($notification);
+               
             }
         }, $technologiesPosts);
 

@@ -38,6 +38,14 @@ class UserController extends AbstractController
         $user = $this->em->getRepository(User::class)->findOneById($userId) ?? $this->getUser();
         $technologies = $this->technologyDevRepository->findByUser($user);
 
+        if ($userId && $this->getUser() && $userId != $this->getUser()->getId() ) {
+            $user->setView($user->getView()+1);
+            $this->em->persist($user);
+            $this->em->flush();
+        }
+
+        if (!$userId && !$this->getUser()) return $this->redirectToRoute('app_login');
+        
         return $this->render('profil/dev/view.html.twig', [
             'technologies' =>   $technologies,
             'user'         =>   $user
@@ -86,7 +94,7 @@ class UserController extends AbstractController
                 $this->addAvatar($avatarFile,$user);
             }
 
-            if($user->getDev()) $this->editDev($user);
+            if($user->getDev()) $this->editDev($user,$form,$userTechnologies);
 
             $localisation = $form->get('localisation')->getData();
     
@@ -104,7 +112,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    private function editDev(User $user,Request $request){
+    private function editDev(User $user,$form,$userTechnologies){
 
         $technologies = $form->get('tech')->getData();
         if ($technologies) {
