@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Candidacture;
 use App\Entity\Poste;
 use App\Form\PosteFormType;
 use App\Repository\FavorisRepository;
@@ -214,4 +215,17 @@ class PosteController extends AbstractController
         ]);
     }
 
+
+    #[Route('/candidacture/{id}', name: 'app_candidacture_poste')]
+    #[IsGranted('ROLE_USER')]
+    public function  candidacture(Poste $poste): Response
+    {
+        $user = $this->getUser();
+        $candidacture = new  Candidacture();
+        $candidacture->setPoste($poste);
+        $candidacture->setUser($user);
+        $this->manager->persist($candidacture);
+        $this->manager->flush();
+        return  $this->redirectToRoute('app_dashboard');
+    }
 }

@@ -8,24 +8,20 @@
                 <div class="col-md-6">
                     <div class="text-center text-white">
                         <h4 class="text-uppercase title mb-4">
-                            Job Detail
+                            Détails du poste
                         </h4>
                         <ul class="page-next d-inline-block mb-0">
                             <li>
                                 <a href="index.html" class="text-uppercase font-weight-bold">
-                                    Home
+                                    Acuueil
                                 </a>
                             </li>
                             <li>
                                 <a href="#" class="text-uppercase font-weight-bold">
-                                    Jobs
+                                    Détails du poste
                                 </a>
                             </li>
-                            <li>
-                                <span class="text-uppercase text-white font-weight-bold">
-                                    Job Detail
-                                </span>
-                            </li>
+                            
                         </ul>
                     </div>
                 </div>
@@ -49,25 +45,8 @@
                                     </h4>
                                 </div>
                             </div>
-                            <div class="job-detail-desc mt-4">
-                                <p class="text-muted mb-3">
-                                    Neque porro quisquam est qui dolorem ipsum dolor sit amet consectetur adipisci velit a quia non eius modi tempora incidunt ut labore dolore magnam aliquam quaerat voluptatem Nemo enim ipsam voluptatem quia voluptas sit aspernatur odit aut fugit sed quia consequuntur magni dolores eose.
-                                </p>
-                                <p class="text-muted mb-0">
-                                    At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praelsentium voluptatum at deleniti atque corrupti quos dolores quas molestias excepturi occaecati cupiditate non provident, similique sunt culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga Temporibus autem quibusdam aut Ut at as enim ad minima veniam quis nostrum that exercitationem ullam corporis suscipit laboriosam officiis debitis aut rerum necessitatibus.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row">
                             <div class="col-lg-12">
-                                <h5 class="text-dark mt-4">
-                                    Description du poste:
-                                </h5>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="job-detail border rounded mt-2 p-4">
+                                <div class="job-detail rounded mt-2 p-4">
                                     <div class="job-detail-desc">
                                         {% set paragraphes = poste.description|split('. ') %}
                                         {% for paragraphe in paragraphes %}
@@ -127,7 +106,7 @@
                             </div>
                         </div>
                         <div class="job-detail border rounded mt-4">
-                            <a href="#" class="btn btn-primary btn-block">
+                            <a href="{{ path('app_candidacture_poste', {id: poste.id})}}" class="btn btn-primary btn-block">
                                 Postuler
                             </a>
                         </div>
