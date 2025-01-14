@@ -47,7 +47,6 @@
 {% endblock %}
 {% block content %}
     <section class="bg-home" style="background: url('{{ asset('assets/images/bg-home.jpg') }}');">
-   
         <div class="bg-overlay"></div>
         <div class="home-center">
             <div class="home-desc-center">
@@ -68,7 +67,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="home-registration-form p-4 mb-3">
-                                    <form class="registration-form"  method="get">
+                                    <form class="registration-form" method="get">
                                         <div class="row justify-content-between">
                                             <div class="col-lg-5 col-md-6">
                                                 <div class="registration-form-box">
@@ -126,7 +125,6 @@
                                 <div class="list-grid-item rounded">
                                     <div class="grid-item-content p-3">
                                         <ul class="list-inline mb-0">
-                                           
                                             <li class="list-inline-item float-right">
                                                 <div class="">
                                                     <a class="favoris" data-poste-id="{{ poste.poste.id }}" data-user-id="{{ poste.poste.company.id }}" class="text-danger">
@@ -161,7 +159,7 @@
                                             </div>
                                         </div>
                                         <div class="apply-button p-3 border-top">
-                                            <a href="{{path('app_details_poste', {id:poste.poste.id })}}" class="btn btn-primary btn-sm">
+                                            <a href="{{ path('app_details_poste', {id:poste.poste.id }) }}" class="btn btn-primary btn-sm">
                                                 Postuler
                                             </a>
                                         </div>
@@ -172,10 +170,10 @@
                     </div>
                 </div>
                 <div class="registration-form-box  d-flex justify-content-center mt-5">
-                <a href="{{ path('app_find_job') }}" id="submit" name="send" class="submitBnt btn btn-primary ">
-                    Voir plus
-                </a>
-            </div>
+                    <a href="{{ path('app_find_job') }}" id="submit" name="send" class="submitBnt btn btn-primary ">
+                        Voir plus
+                    </a>
+                </div>
             </div>
         </section>
         <!-- all jobs start -->
@@ -187,7 +185,6 @@
                             <h4 class="title title-line pb-5">
                                 Dévéloppeurs les plus vues
                             </h4>
-                        
                         </div>
                     </div>
                 </div>
@@ -209,128 +206,141 @@
                                                 <div class="p-4">
                                                     <div class="row align-items-center">
                                                         <div class="col-md-2">
-                                                            <div class="mo-mb-2 rounded" >
-                                                                <img src="{{ asset('uploads/avatars/' ~ dev.user.avatar) }}" alt="" class="img-fluid mx-auto d-block" style="height: 100px;width:100px"/>
-                                                            </div>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <div>
-                                                                    <p class="text-muted mb-0">
-                                                                        {{ dev.user.dev.bibliographie|slice(0, 130) ~ (dev.user.dev.bibliographie|length > 130 ? '...' : '') }}
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <div>
-                                                                    <p class="text-muted mb-0">
-                                                                        <i class="mdi mdi-map-marker text-primary mr-2"></i>
-                                                                        {{ dev.user.localisation }}
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <div>
-                                                                    <p class="text-muted mb-0 mo-mb-2">
-                                                                        {{ dev.user.dev.salaireMin }}
-                                                                        <span class="text-primary">
-                                                                            €
-                                                                        </span>
-                                                                        /mois
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <div>
-                                                                    <p class="text-muted mb-0">
-                                                                        A distance
-                                                                    </p>
-                                                                </div>
+                                                            <div class="mo-mb-2 rounded">
+                                                                <img src="{{ asset('uploads/avatars/' ~ dev.user.avatar) }}" alt="" class="img-fluid mx-auto d-block" style="height: 100px;width:100px" />
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="p-3 bg-light">
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <div>
-                                                                    <p class="text-muted mb-0 mo-mb-2">
-                                                                        <span class="text-dark">
-                                                                            Experience :
-                                                                        </span>
-                                                                        {{ dev.user.dev.experienceLevel }}
-                                                                        ans
-                                                                    </p>
-                                                                </div>
+                                                        <div class="col-md-3">
+                                                            <div>
+                                                                <p class="text-muted mb-0">
+                                                                    {{ dev.user.dev.bibliographie|slice(0, 130) ~ (dev.user.dev.bibliographie|length > 130 ? '...' : '') }}
+                                                                </p>
                                                             </div>
-                                                            <div class="col-md-6"></div>
-                                                            <div class="col-md-2">
-                                                                <div>
-                                                                    <a href="{{path('app_view_profil',{id:dev.user.id})}}" class="text-primary">
-                                                                        {{"Voir profil"| trans}}
-                                                                        <i class="mdi mdi-chevron-double-right"></i>
-                                                                    </a>
-                                                                </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div>
+                                                                <p class="text-muted mb-0">
+                                                                    <i class="mdi mdi-map-marker text-primary mr-2"></i>
+                                                                    {{ dev.user.localisation }}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <div>
+                                                                <p class="text-muted mb-0 mo-mb-2">
+                                                                    {{ dev.user.dev.salaireMin }}
+                                                                    <span class="text-primary">
+                                                                        €
+                                                                    </span>
+                                                                    /mois
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <div>
+                                                                <p class="text-muted mb-0">
+                                                                    A distance
+                                                                </p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            {% endfor %}
-                                        </div>
+                                                <div class="p-3 bg-light">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div>
+                                                                <p class="text-muted mb-0 mo-mb-2">
+                                                                    <span class="text-dark">
+                                                                        Experience :
+                                                                    </span>
+                                                                    {{ dev.user.dev.experienceLevel }}
+                                                                    ans
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6"></div>
+                                                        <div class="col-md-2">
+                                                            <div>
+                                                                <a href="{{ path('app_view_profil',{id:dev.user.id}) }}" class="text-primary">
+                                                                    {{ "Voir profil"| trans }}
+                                                                    <i class="mdi mdi-chevron-double-right"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="featured-job" role="tabpanel" aria-labelledby="featured-job-tab">
-                                    <div class="row">
-                                        <div class="col-lg-12 text-center">
-                                            Pas de développeur de cette catégorie
-                                        </div>
+                            </div>
+                            <div class="tab-pane fade" id="featured-job" role="tabpanel" aria-labelledby="featured-job-tab">
+                                <div class="row">
+                                    <div class="col-lg-12 text-center">
+                                        Pas de développeur de cette catégorie
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="part-job" role="tabpanel" aria-labelledby="part-job-tab">
-                                    <div class="row">
-                                    </div>
+                            </div>
+                            <div class="tab-pane fade" id="part-job" role="tabpanel" aria-labelledby="part-job-tab">
+                                <div class="row"></div>
+                            </div>
+                            <div class="tab-pane fade" id="full-job" role="tabpanel" aria-labelledby="full-job-tab">
+                                <div class="row">
+                                    <div class="col-lg-12"></div>
                                 </div>
-                                <div class="tab-pane fade" id="full-job" role="tabpanel" aria-labelledby="full-job-tab">
-                                    <div class="row">
-                                        <div class="col-lg-12"></div>
-                                    </div>
-                                <!-- end row -->
-                                </div>
+                            <!-- end row -->
                             </div>
                         </div>
                     </div>
-                    <!-- end row -->
-                                                <div class="registration-form-box  d-flex justify-content-center mt-5">
-                                                    <a href="{{ path('app_dev_list') }}" id="submit" name="send" class="submitBnt btn btn-primary ">
-                                                        Voir plus
-                                                    </a>
-                                                </div>
                 </div>
-            <!-- end containar -->
-            </section>
-            <!-- all jobs end -->
-            {% if app.user == null %}
-                <!-- How it Work start -->
-                <section class="section">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-12">
-                                <div class="section-title text-center mb-4 pb-2">
-                                    <h4 class="title title-line pb-5">
-                                        Comment ça marche
-                                    </h4>
-                                </div>
+                <!-- end row -->
+                <div class="registration-form-box  d-flex justify-content-center mt-5">
+                    <a href="{{ path('app_dev_list') }}" id="submit" name="send" class="submitBnt btn btn-primary ">
+                        Voir plus
+                    </a>
+                </div>
+            </div>
+        <!-- end containar -->
+        </section>
+        <!-- all jobs end -->
+        {% if app.user == null %}
+            <!-- How it Work start -->
+            <section class="section">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="section-title text-center mb-4 pb-2">
+                                <h4 class="title title-line pb-5">
+                                    Comment ça marche
+                                </h4>
                             </div>
                         </div>
-                        <div class="row">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mt-4 pt-2">
+                            <div class="how-it-work-box bg-light p-4 text-center rounded shadow">
+                                <div class="how-it-work-img position-relative rounded-pill mb-3">
+                                    <img src="{{ asset('assets/images/how-it-work/img-1.png') }}" alt="" class="mx-auto d-block" height="50"></div>
+                                    <div>
+                                        <h5>
+                                            Créer un compte
+                                        </h5>
+                                        <p class="text-muted">
+                                            Lors de votre première visite sur la plateforme, vous pouvez consulter les offres disponibles. Pour postuler à ces différentes offres, il est nécessaire de créer un compte.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-4 mt-4 pt-2">
                                 <div class="how-it-work-box bg-light p-4 text-center rounded shadow">
                                     <div class="how-it-work-img position-relative rounded-pill mb-3">
-                                        <img src="{{asset('assets/images/how-it-work/img-1.png')}}" alt="" class="mx-auto d-block" height="50"></div>
+                                        <img src="{{ asset('assets/images/how-it-work/img-2.png') }}" alt="" class="mx-auto d-block" height="50"></div>
                                         <div>
                                             <h5>
-                                                Créer un compte
+                                                Postuler aux offres
                                             </h5>
                                             <p class="text-muted">
-                                            Lors de votre première visite sur la plateforme, vous pouvez consulter les offres disponibles. Pour postuler à ces différentes offres, il est nécessaire de créer un compte.
+                                                Une fois votre compte créé, vous pouvez postuler aux différentes offres disponibles sur la plateforme qui correspondent à votre profil.
                                             </p>
                                         </div>
                                     </div>
@@ -338,140 +348,125 @@
                                 <div class="col-md-4 mt-4 pt-2">
                                     <div class="how-it-work-box bg-light p-4 text-center rounded shadow">
                                         <div class="how-it-work-img position-relative rounded-pill mb-3">
-                                            <img src="{{asset('assets/images/how-it-work/img-2.png')}}" alt="" class="mx-auto d-block" height="50"></div>
+                                            <img src="{{ asset('assets/images/how-it-work/img-3.png') }}" alt="" class="mx-auto d-block" height="50"></div>
                                             <div>
                                                 <h5>
-                                                    Postuler aux offres
+                                                    Discuter avec l'entreprise
                                                 </h5>
                                                 <p class="text-muted">
-                                                    Une fois votre compte créé, vous pouvez postuler aux différentes offres disponibles sur la plateforme qui correspondent à votre profil.
-                                                </p>
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 mt-4 pt-2">
-                                        <div class="how-it-work-box bg-light p-4 text-center rounded shadow">
-                                            <div class="how-it-work-img position-relative rounded-pill mb-3">
-                                                <img src="{{asset('assets/images/how-it-work/img-3.png')}}" alt="" class="mx-auto d-block" height="50"></div>
-                                                <div>
-                                                    <h5>
-                                                        Discuter avec l'entreprise
-                                                    </h5>
-                                                    <p class="text-muted">
                                                     Après avoir postulé, vous pouvez échanger directement avec l'entreprise via une messagerie interne, ce qui vous permet de recevoir plus rapidement des informations sur vos futures réponses.
-                                                    </p>
-                                                </div>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </section>
-                            <!-- How it Work end -->
-                            <!-- counter start -->
-                            <section class="section bg-counter position-relative" style="background: url('images/bg-counters.jpg') center center;">
-                                <div class="bg-overlay bg-overlay-gradient"></div>
-                                <div class="container">
-                                    <div class="row" id="counter">
-                                        <div class="col-md-3 col-6">
-                                            <div class="home-counter pt-4 pb-4">
-                                                <div class="float-left counter-icon mr-3">
-                                                    <i class="mdi mdi-bank h1 text-white"></i>
-                                                </div>
-                                                <div class="counter-content overflow-hidden">
-                                                    <h1 class="counter-value text-white mb-1" data-count="120">
-                                                        10
-                                                    </h1>
-                                                    <p class="counter-name text-white text-uppercase mb-0">
-                                                        Entreprises
-                                                    </p>
-                                                </div>
+                            </div>
+                        </section>
+                        <!-- How it Work end -->
+                        <!-- counter start -->
+                        <section class="section bg-counter position-relative" style="background: url('images/bg-counters.jpg') center center;">
+                            <div class="bg-overlay bg-overlay-gradient"></div>
+                            <div class="container">
+                                <div class="row" id="counter">
+                                    <div class="col-md-3 col-6">
+                                        <div class="home-counter pt-4 pb-4">
+                                            <div class="float-left counter-icon mr-3">
+                                                <i class="mdi mdi-bank h1 text-white"></i>
+                                            </div>
+                                            <div class="counter-content overflow-hidden">
+                                                <h1 class="counter-value text-white mb-1" data-count="120">
+                                                    10
+                                                </h1>
+                                                <p class="counter-name text-white text-uppercase mb-0">
+                                                    Entreprises
+                                                </p>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 col-6">
-                                            <div class="home-counter pt-4 pb-4">
-                                                <div class="float-left counter-icon mr-3">
-                                                    <i class="mdi mdi-file-document-box h1 text-white"></i>
-                                                </div>
-                                                <div class="counter-content overflow-hidden">
-                                                    <h1 class="counter-value text-white mb-1" data-count="480">
-                                                        80
-                                                    </h1>
-                                                    <p class="counter-name text-white text-uppercase mb-0">
-                                                        Jobs trouvés
-                                                    </p>
-                                                </div>
+                                    </div>
+                                    <div class="col-md-3 col-6">
+                                        <div class="home-counter pt-4 pb-4">
+                                            <div class="float-left counter-icon mr-3">
+                                                <i class="mdi mdi-file-document-box h1 text-white"></i>
+                                            </div>
+                                            <div class="counter-content overflow-hidden">
+                                                <h1 class="counter-value text-white mb-1" data-count="480">
+                                                    80
+                                                </h1>
+                                                <p class="counter-name text-white text-uppercase mb-0">
+                                                    Jobs trouvés
+                                                </p>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 col-6">
-                                            <div class="home-counter pt-4 pb-4">
-                                                <div class="float-left counter-icon mr-3">
-                                                    <i class="mdi mdi-calendar-multiple-check h1 text-white"></i>
-                                                </div>
-                                                <div class="counter-content overflow-hidden">
-                                                    <h1 class="counter-value text-white mb-1" data-count="120">
-                                                        100
-                                                    </h1>
-                                                    <p class="counter-name text-white text-uppercase mb-0">
-                                                        Postes publiés
-                                                    </p>
-                                                </div>
+                                    </div>
+                                    <div class="col-md-3 col-6">
+                                        <div class="home-counter pt-4 pb-4">
+                                            <div class="float-left counter-icon mr-3">
+                                                <i class="mdi mdi-calendar-multiple-check h1 text-white"></i>
+                                            </div>
+                                            <div class="counter-content overflow-hidden">
+                                                <h1 class="counter-value text-white mb-1" data-count="120">
+                                                    100
+                                                </h1>
+                                                <p class="counter-name text-white text-uppercase mb-0">
+                                                    Postes publiés
+                                                </p>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 col-6">
-                                            <div class="home-counter pt-4 pb-4">
-                                                <div class="float-left counter-icon mr-3">
-                                                    <i class="mdi mdi-account-multiple-plus h1 text-white"></i>
-                                                </div>
-                                                <div class="counter-content overflow-hidden">
-                                                    <h1 class="counter-value text-white mb-1" data-count="200">
-                                                        10
-                                                    </h1>
-                                                    <p class="counter-name text-white text-uppercase mb-0">
-                                                        développeurs
-                                                    </p>
-                                                </div>
+                                    </div>
+                                    <div class="col-md-3 col-6">
+                                        <div class="home-counter pt-4 pb-4">
+                                            <div class="float-left counter-icon mr-3">
+                                                <i class="mdi mdi-account-multiple-plus h1 text-white"></i>
+                                            </div>
+                                            <div class="counter-content overflow-hidden">
+                                                <h1 class="counter-value text-white mb-1" data-count="200">
+                                                    10
+                                                </h1>
+                                                <p class="counter-name text-white text-uppercase mb-0">
+                                                    développeurs
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </section>
-                            <!-- counter end -->
-                            <!-- testimonial start -->
-                            <section class="section">
-                                <div class="container">
-                                    <div class="row justify-content-center">
-                                        <div class="col-12">
-                                            <div class="section-title text-center mb-4 pb-2">
-                                                <h4 class="title title-line pb-5">
-                                                    Les témoignages de non clients
-                                                </h4>
-                                            </div>
+                            </div>
+                        </section>
+                        <!-- counter end -->
+                        <!-- testimonial start -->
+                        <section class="section">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-12">
+                                        <div class="section-title text-center mb-4 pb-2">
+                                            <h4 class="title title-line pb-5">
+                                                Les témoignages de non clients
+                                            </h4>
                                         </div>
                                     </div>
-                                    <div class="row pt-4">
-                                        <div class="col-lg-12">
-                                            <div id="owl-testi" class="owl-carousel owl-theme">
-                                                <div class="item testi-box rounded p-4 mr-3 ml-2 mb-4 bg-light position-relative">
-                                                    <p class="text-muted mb-5">
+                                </div>
+                                <div class="row pt-4">
+                                    <div class="col-lg-12">
+                                        <div id="owl-testi" class="owl-carousel owl-theme">
+                                            <div class="item testi-box rounded p-4 mr-3 ml-2 mb-4 bg-light position-relative">
+                                                <p class="text-muted mb-5">
                                                     Grâce à cette plateforme, j'ai trouvé mon premier emploi en tant que développeur junior. Le processus était simple, et la messagerie interne m'a permis de communiquer directement avec les recruteurs pour mieux comprendre leurs attentes.
-                                                    </p>
-                                                    <div class="clearfix">
-                                                        <div class="testi-img float-left mr-3">
-                                                            <img src="images/testi/img-1.png" height="64" alt="" class="rounded-circle shadow"></div>
-                                                            <h5 class="f-18 pt-1">
-                                                                Kevin Stewart
-                                                            </h5>
-                                                            <p class="text-muted mb-0">
-                                                                Développeur Junior
-                                                            </p>
-                                                            <div class="testi-icon">
-                                                                <i class="mdi mdi-format-quote-open display-2"></i>
-                                                            </div>
+                                                </p>
+                                                <div class="clearfix">
+                                                    <div class="testi-img float-left mr-3">
+                                                        <img src="images/testi/img-1.png" height="64" alt="" class="rounded-circle shadow"></div>
+                                                        <h5 class="f-18 pt-1">
+                                                            Kevin Stewart
+                                                        </h5>
+                                                        <p class="text-muted mb-0">
+                                                            Développeur Junior
+                                                        </p>
+                                                        <div class="testi-icon">
+                                                            <i class="mdi mdi-format-quote-open display-2"></i>
                                                         </div>
                                                     </div>
-                                                    <div class="item testi-box rounded p-4 mr-3 ml-2 bg-light position-relative">
-                                                        <p class="text-muted mb-5">
+                                                </div>
+                                                <div class="item testi-box rounded p-4 mr-3 ml-2 bg-light position-relative">
+                                                    <p class="text-muted mb-5">
                                                         En tant que recruteur, j'apprécie la simplicité de la plateforme pour publier des annonces et gérer les candidatures. La messagerie interne est un vrai atout pour échanger efficacement avec les candidats. Nous avons trouvé des talents incroyables en un temps record !
                                                         <div class="clearfix">
                                                             <div class="testi-img float-left mr-3">
@@ -489,7 +484,7 @@
                                                         </div>
                                                         <div class="item testi-box rounded p-4 mr-3 ml-2 bg-light position-relative">
                                                             <p class="text-muted mb-5">
-                                                                Je cherchais des missions adaptées à mon profil de freelance, et cette plateforme m'a permis de décrocher plusieurs projets intéressants. La possibilité de discuter directement avec les entreprises m'a aidé à négocier des conditions avantageuses. Une expérience fluide et professionnelle 
+                                                                Je cherchais des missions adaptées à mon profil de freelance, et cette plateforme m'a permis de décrocher plusieurs projets intéressants. La possibilité de discuter directement avec les entreprises m'a aidé à négocier des conditions avantageuses. Une expérience fluide et professionnelle
                                                             </p>
                                                             <div class="clearfix">
                                                                 <div class="testi-img float-left mr-3">
@@ -498,7 +493,7 @@
                                                                         Perry Martinez
                                                                     </h5>
                                                                     <p class="text-muted mb-0">
-                                                                     Développeur Freelance
+                                                                        Développeur Freelance
                                                                     </p>
                                                                     <div class="testi-icon">
                                                                         <i class="mdi mdi-format-quote-open display-2"></i>
@@ -511,9 +506,7 @@
                                             </div>
                                             <div class="container mt-100 mt-60">
                                                 <div class="row justify-content-center">
-                                                    <div class="col-12">
-                                                        
-                                                    </div>
+                                                    <div class="col-12"></div>
                                                 </div>
                                                 <div class="row align-items-center">
                                                     <div class="col-lg-2 col-md-4 col-6 mt-4 pt-2 text-center">
@@ -577,33 +570,30 @@
 								}
 								);
 							</script>
-                            <script>
-
-                                
-                                                            $(document).ready(function () {
-                                                                $('.favoris').click(function () {
-                                                                // Récupérer l'élément sur lequel on a cliqué
-                                                                let clickedElement = $(this);
-                                                                
-                                                                // Récupérer des valeurs spécifiques à cet élément
-                                                                let posteId = clickedElement.data('poste-id');
-                                                                let userId = clickedElement.data('user-id');
-                                                                console.log(userId);
-                                                                console.log(posteId);
-                                                                $.ajax({url: ' {{ path('add_favoris_poste') }}',
-                                                                type: 'POST',
-                                                                dataType: 'json',
-                                                                data: {
-                                                                'poste_id': posteId,
-                                                                'user_id': userId
-                                                                },
-                                                                success: function (response) {
-                                                            clickedElement.html("<i class='mdi mdi-heart' style='color:#2f55d4; font-size:20px'></i>");
-                                                                }
-                                                                });
-                                                                });
-                                                                
-                                                            });
-                                                        </script>
-                                                    {% endblock %}
-                                                    
+                                                            <script>
+                                $(document).ready(function () {
+                                    $('#chercher').on('click', function (e) {
+                                        e.preventDefault(); // Empêche le comportement par défaut du lien
+                            
+                                        // Récupérer les valeurs des champs
+                                        const motsCles = $('#exampleInputName1').val();
+                                        const localisation = $('#address-input').val();
+                            
+                                        // Construire l'URL dynamiquement
+                                        const baseUrl = "{{ path('app_find_job') }}"; 
+                                        const params = new URLSearchParams();
+                            
+                                        if (motsCles) params.append('mot_cles', motsCles);
+                                        if (localisation) params.append('localisation', localisation);
+                            
+                                        // Mettre à jour l'attribut href de l'élément <a>
+                                        const newUrl = `${baseUrl}?${params.toString()}`;
+                                        $(this).attr('href', newUrl);
+                            
+                                        // Rediriger vers l'URL générée
+                                        window.location.href = newUrl;
+                                    });
+                                });
+                            </script>
+                                                        {% endblock %}
+                                                        

@@ -110,16 +110,16 @@
 					{% else %}
 						
 						<li>
-							<a href="#">Mes candidactures</a>
+							<a href="{{ path('app_list_candidacture_poste') }}">Mes candidactures</a>
 						</li>
 					{% endif %}
 				{% endif %}
 				<li>
 					<a href="{{path("app_favoris_poste")}}">Mes Favoris</a>
 				</li>
-				<li>
+			{# 	<li>
 					<a href="#">contact</a>
-				</li>
+				</li> #}
 
 			</ul>
 			<!--end navigation menu-->

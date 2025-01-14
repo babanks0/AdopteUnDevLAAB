@@ -3,15 +3,20 @@
 namespace App\Entity;
 
 use App\Repository\CandidactureRepository;
+use App\Utils\TraitClasses\EntityTimestampableTrait;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Doctrine\UuidGenerator;
 
 #[ORM\Entity(repositoryClass: CandidactureRepository::class)]
 class Candidacture
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    use EntityTimestampableTrait;
+    #[ORM\Id] 
+    #[ORM\Column(type: 'guid', unique: true)] 
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')] 
+    #[ORM\CustomIdGenerator(class: UuidGenerator::class)] 
+
+    private ?string $id = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
