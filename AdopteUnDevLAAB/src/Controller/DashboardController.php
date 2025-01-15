@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\Notification;
 use App\Repository\DevRepository;
+use App\Repository\FavorisRepository;
 use App\Repository\UserRepository;
 use App\Repository\PosteRepository;
 use App\Repository\TechnologyRepository;
@@ -24,16 +25,18 @@ class DashboardController extends AbstractController
     private UserRepository $userRepository;
     private DevRepository $devRepository;
     private TechnologyDevRepository $technologyDevRepository;
+
     public function __construct(
-        PosteRepository $posteRepository, 
-        TechnologyRepository $technologyRepository, 
+        PosteRepository $posteRepository,
+        TechnologyRepository $technologyRepository,
         UserRepository $userRepository,
         DevRepository $devRepository,
         TechnologyPosteRepository $technologyPosteRepository,
         TechnologyDevRepository $technologyDevRepository,
         private NotificationRepository $notificationRepository,
-        private EntityManagerInterface $em
-    ){
+        private EntityManagerInterface $em,
+        private FavorisRepository $favorisRepository,
+    ) {
         $this->posteRepository = $posteRepository;
         $this->technologyRepository = $technologyRepository;
         $this->technologyPosteRepository = $technologyPosteRepository;
@@ -46,43 +49,52 @@ class DashboardController extends AbstractController
     {
         $user = $this->getUser();
         $postesData = [];
-        $devData  = [];
+        $devData = [];
         $users = $this->userRepository->findAllExceptCurrentUser($this->getUser());
 
-        foreach($users  as $user){
-            if($user->getDev() != null){
-                $technologyDev =  $this->technologyDevRepository->findBy(['deleted' => false, 'user' => $user]);
+        foreach ($users as $user) {
+            if ($user->getDev() != null) {
+                $technologyDev = $this->technologyDevRepository->findBy(['deleted' => false, 'user' => $user]);
                 $datas = [
-                    'user' => $user, 
+                    'user' => $user,
                     'technologies' => $technologyDev,
                 ];
                 $devData[] = $datas;
             }
-           
+
         }
 
         $postes = $this->posteRepository->findBy(['deleted' => false]);
-        foreach($postes as $poste){
+        foreach ($postes as $poste) {
             $technology = $this->technologyPosteRepository->findBy(['deleted' => false, 'poste' => $poste]);
+            $favoris = $this->favorisRepository->findOneBy(['deleted' => false]);
+            $isFavoris = null;
+            foreach ($favoris as $favo) {
+                if($favo->getPoste() === $poste){
+                   $isFavoris = $favo ;
+                }
+            }
             $datas = [
-                'poste' => $poste, 
-                'technologies' => $technology
+                'poste' => $poste,
+                'favoris' => $isFavoris
             ];
             $postesData[] = $datas;
+
+           
         }
-        $notification = $this->em->getRepository(Notification::class)->findOneBy(["user"=>$this->getUser(),"view"=>false]);
+        $notification = $this->em->getRepository(Notification::class)->findOneBy(["user" => $this->getUser(), "view" => false]);
         if ($notification) {
             $notification->setView(true);
             $this->em->persist($notification);
             $this->em->flush();
         }
-        
+
 
         return $this->render('dashboard/index.html.twig', [
-            'postes'=> $postesData,
+            'postes' => $postesData,
             'devs' => $devData,
-            "notice"=> $notification
+            "notice" => $notification
         ]);
-        
+
     }
 }

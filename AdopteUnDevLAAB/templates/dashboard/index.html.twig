@@ -128,7 +128,7 @@
                                             <li class="list-inline-item float-right">
                                                 <div class="">
                                                     <a class="favoris" data-poste-id="{{ poste.poste.id }}" data-user-id="{{ poste.poste.company.id }}" class="text-danger">
-                                                        {% if poste.poste.favoris %}
+                                                        {% if poste.favoris != null and app.user == poste.favoris.user.id  %}
                                                             <i class="mdi mdi-heart" style="color:#2f55d4; font-size:20px"></i>
                                                         {% else %}
                                                             <i class="mdi mdi-heart-outline" style="color:#2f55d4; font-size:20px"></i>
@@ -236,13 +236,7 @@
                                                                 </p>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-2">
-                                                            <div>
-                                                                <p class="text-muted mb-0">
-                                                                    A distance
-                                                                </p>
-                                                            </div>
-                                                        </div>
+                                                        
                                                     </div>
                                                 </div>
                                                 <div class="p-3 bg-light">
@@ -593,6 +587,30 @@
                                         // Rediriger vers l'URL générée
                                         window.location.href = newUrl;
                                     });
+                                });
+                            </script>
+                            <script>
+                                $(document).ready(function () {
+                                    $('.favoris').click(function () {
+                                    // Récupérer l'élément sur lequel on a cliqué
+                                    let clickedElement = $(this);
+                                    
+                                    // Récupérer des valeurs spécifiques à cet élément
+                                    let posteId = clickedElement.data('poste-id');
+                                    let userId = clickedElement.data('user-id');
+                                    $.ajax({url: ' {{ path('add_favoris_poste') }}',
+                                    type: 'POST',
+                                    dataType: 'json',
+                                    data: {
+                                    'poste_id': posteId,
+                                    'user_id': userId
+                                    },
+                                    success: function (response) {
+                                clickedElement.html("<i class='mdi mdi-heart' style='color:#2f55d4; font-size:20px'></i>");
+                                    }
+                                    });
+                                    });
+                                    
                                 });
                             </script>
                                                         {% endblock %}

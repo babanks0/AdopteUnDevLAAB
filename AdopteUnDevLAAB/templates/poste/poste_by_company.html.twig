@@ -52,30 +52,45 @@
     {% endblock %}
     {% block content %}
         <!-- JOB LIST START -->
-       <!-- Start home -->
-<section class="bg-half page-next-level"> 
-<div class="bg-overlay"></div>
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="text-center text-white">
-                <h4 class="text-uppercase title mb-4">Mes postes</h4>
-                <ul class="page-next d-inline-block mb-0">
-                    <li><a href="{{path('app_dashboard')}}" class="text-uppercase font-weight-bold">Accueil</a></li>
-                    <li><a href="#" class="text-uppercase font-weight-bold">Postes</a></li> 
-                    <li>
-                        <span class="text-uppercase text-white font-weight-bold">Mes Postes</span> 
-                    </li> 
-                </ul>
+        <!-- Start home -->
+            <section class="bg-half page-next-level"> <div class="bg-overlay"></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="text-center text-white">
+                            <h4 class="text-uppercase title mb-4">
+                                Mes postes
+                            </h4>
+                            <ul class="page-next d-inline-block mb-0">
+                                <li>
+                                    <a href="{{ path('app_dashboard') }}" class="text-uppercase font-weight-bold">
+                                        Accueil
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-uppercase font-weight-bold">
+                                        Postes
+                                    </a>
+                                </li>
+                                <li>
+                                    <span class="text-uppercase text-white font-weight-bold">
+                                        Mes Postes
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
-</section>
-<!-- end home -->
+        </section>
+        <!-- end home -->
         <section class="section">
             <div class="container">
-               
+                <div class="job-detail w-25 border rounded mt-4">
+                    <a href="{{ path('app_poste') }}" class="btn btn-primary btn-block">
+                        Ajouter un nouveau poste
+                    </a>
+                </div>
                 <div class="col-lg-12 mt-4 pt-2">
                     <div class="row">
                         <div class="col-lg-12 mt-4 pt-2">
@@ -153,15 +168,13 @@
                             {% endfor %}
                         </div>
                     </div>
-                    <hr>
-                   
+                    <hr></div>
                 </div>
             </div>
-        </div>
-    </section>
-{% endblock %}
-{% block javascripts %}
-    <script>
+        </section>
+    {% endblock %}
+    {% block javascripts %}
+        <script>
         $(document).ready(function () {
             $('#motCles').on('input', function () {
                 let motCles = $('#motCles').val();
@@ -192,7 +205,7 @@
             })
         }
     </script>
-    <script>
+        <script>
     const input = document.getElementById('address-input');
     const suggestionsDiv = document.getElementById('suggestions');
 
@@ -228,11 +241,11 @@
     }
     );
 </script>
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Select2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script>
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Select2 JS -->
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <script>
         $(document).ready(function () {
         // Initialisation de Select2
             $('.js-example-basic-multiple').select2({
@@ -241,4 +254,5 @@
             });
         });
     </script>
-{% endblock %}
+    {% endblock %}
+    
